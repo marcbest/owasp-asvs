@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  assessment: one
+  requirement: one
+  met_requirement: false
+  comment: MyText
+
+two:
+  assessment: two
+  requirement: two
+  met_requirement: false
+  comment: MyText

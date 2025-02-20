@@ -1,0 +1,9 @@
+<%= render partial: "assessments/requirement_row",
+           locals: { req: req, assessment: assessment, level: level } %>
+
+<% if req.children.any? %>
+  <% req.children.each do |child| %>
+    <%= render partial: "assessments/requirement_tree",
+               locals: { req: child, assessment: assessment, level: level + 1 } %>
+  <% end %>
+<% end %>

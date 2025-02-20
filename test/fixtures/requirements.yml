@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  asvs_version: one
+  parent_id: 1
+  shortcode: MyString
+  ordinal: 1
+  name: MyString
+  description: MyText
+
+two:
+  asvs_version: two
+  parent_id: 1
+  shortcode: MyString
+  ordinal: 1
+  name: MyString
+  description: MyText

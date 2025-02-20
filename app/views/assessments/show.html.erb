@@ -1,0 +1,24 @@
+<div class="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-8">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">
+    <%= @assessment.asvs_version.name %> – Assessment
+  </h1>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Requirement</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Description</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Response</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <% top_requirements = @assessment.asvs_version.requirements.where(parent_id: nil) %>
+        <% top_requirements.each do |req| %>
+          <%= render partial: "assessments/requirement_tree",
+                     locals: { req: req, assessment: @assessment, level: 0 } %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
