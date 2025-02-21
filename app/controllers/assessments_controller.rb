@@ -4,6 +4,8 @@ class AssessmentsController < ApplicationController
 
   def index
     @assessments = current_user.assessments
+    @assessment = Assessment.new
+    @asvs_versions = AsvsVersion.all
   end
 
   def new
