@@ -1,0 +1,15 @@
+<%
+  checkbox_color = field == "applicable" ? "text-blue-600" : "text-green-600"
+%>
+<turbo-frame id="<%= "#{field}_#{response_obj.id}" %>" data-turbo-scroll="true">
+  <%= form_with model: [assessment, response_obj], 
+                data: { turbo_frame: "#{field}_#{response_obj.id}", controller: "auto-save" }, 
+                local: false do |f| %>
+    <%= f.hidden_field :requirement_id, value: response_obj.requirement_id %>
+    <div class="flex items-center justify-center">
+      <%= f.check_box field.to_sym, 
+                      data: { action: "change->auto-save#checkboxChanged" }, 
+                      class: "form-checkbox h-4 w-4 #{checkbox_color}" %>
+    </div>
+  <% end %>
+</turbo-frame>
