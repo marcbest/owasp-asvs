@@ -11,7 +11,7 @@
   <body class="bg-gray-100">
     <header class="p-4 bg-blue-600 text-white">
       <nav class="container mx-auto flex justify-between items-center">
-        <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-6">
           <h1 class="text-xl font-bold">
             <%= link_to "OWASP ASVS", root_path, class: "hover:underline" %>
           </h1>
@@ -19,15 +19,19 @@
             <%= link_to "Assessments", assessments_path, class: "hover:underline" %>
           <% end %>
         </div>
-        <div class="flex items-center space-x-4">
+        
+        <div class="flex items-center space-x-6">
           <% if user_signed_in? %>
-            <span class="mr-4">Hello, <%= current_user.email %></span>
-            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "hover:underline" %>
+            <span class="text-sm">Hello, <%= current_user.email %></span>
+            <%= form_with(url: destroy_user_session_path, method: :delete, class: "inline") do %>
+              <%= submit_tag "Logout", class: "hover:underline bg-transparent border-none cursor-pointer text-white" %>
+            <% end %>
           <% else %>
-            <%= link_to "Sign Up", new_user_registration_path, class: "mr-4 hover:underline" %>
+            <%= link_to "Sign Up", new_user_registration_path, class: "hover:underline" %>
             <%= link_to "Login", new_user_session_path, class: "hover:underline" %>
           <% end %>
-          <%= link_to "https://github.com/marcbest/owasp-asvs", target: "_blank", rel: "noopener", class: "hover:underline" do %>
+
+          <%= link_to "https://github.com/marcbest/owasp-asvs", target: "_blank", rel: "noopener", class: "hover:underline flex items-center" do %>
             <svg fill="currentColor" viewBox="0 0 16 16" class="w-6 h-6" aria-hidden="true">
               <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38 
               0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 
@@ -41,6 +45,7 @@
         </div>
       </nav>
     </header>
+
     <div class="container mx-auto mt-8">
       <% if notice %>
         <div class="p-4 bg-green-100 text-green-800 rounded"><%= notice %></div>

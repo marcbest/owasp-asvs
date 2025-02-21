@@ -1,0 +1,39 @@
+<div class="max-w-3xl mx-auto text-center py-12">
+  <h1 class="text-4xl font-bold text-gray-900">OWASP ASVS Assessment Tool</h1>
+  <p class="mt-4 text-lg text-gray-600">
+    This is an open-source tool designed to help developers, security teams, and auditors
+    assess their applications against the OWASP Application Security Verification Standard (ASVS).
+  </p>
+
+  <div class="mt-6">
+    <a href="https://github.com/marcbest/owasp-asvs"
+       target="_blank"
+       class="inline-block bg-gray-900 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-gray-700 transition">
+      View on GitHub
+    </a>
+  </div>
+
+  <div class="mt-10">
+    <h2 class="text-2xl font-semibold text-gray-800">Features</h2>
+    <ul class="mt-4 space-y-3 text-gray-700 text-lg">
+      <li>✅ Easily track ASVS compliance for your projects</li>
+      <li>✅ Supports multiple ASVS versions</li>
+      <li>✅ Interactive assessments with auto-save</li>
+      <li>✅ Open-source and built with Rails 8, Hotwire, and TailwindCSS</li>
+    </ul>
+  </div>
+
+  <div class="mt-10">
+    <% if user_signed_in? %>
+      <a href="<%= assessments_path %>"
+         class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-blue-700 transition">
+        Go to My Assessments
+      </a>
+    <% else %>
+      <a href="<%= new_user_registration_path %>"
+         class="inline-block bg-green-600 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-green-700 transition">
+        Get Started
+      </a>
+    <% end %>
+  </div>
+</div>
