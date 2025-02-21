@@ -26,32 +26,26 @@
   <!-- Response Form -->
   <td class="px-6 py-4">
     <turbo-frame id="row_form_<%= req.id %>">
-      <% if req.l1_required || req.l2_required || req.l3_required %>
-        <% response_obj = assessment.responses.find_by(requirement_id: req.id) || assessment.responses.build(requirement: req) %>
-        <%= form_with model: [assessment, response_obj],
-                      data: { turbo_frame: "row_form_#{req.id}", controller: "auto-save" },
-                      local: false do |f| %>
-          <%= f.hidden_field :level, value: level %>
-          <%= f.hidden_field :requirement_id, value: req.id %>
-
-          <div class="flex items-center space-x-2">
-            <%= f.check_box :met_requirement, data: { action: "change->auto-save#checkboxChanged" } %>
-            <span class="text-gray-700 text-sm">Met</span>
-          </div>
-          
-          <div class="mt-3">
-            <%= f.label :comment, "Comments", class: "block text-sm font-medium text-gray-700" %>
-            <%= f.text_area :comment, rows: 1,
-                  id: "comment_#{req.id}",
-                  class: "mt-1 w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500",
-                  data: { action: "input->auto-save#commentChanged", auto_save_target: "comment" },
-                  "data-turbo-permanent" => "true" %>
-          </div>
-        <% end %>
-      <% else %>
-        <% if req.parent_id.present? %>
-          <p class="text-xs text-gray-400 italic">No response required</p>
-        <% end %>
+      <% response_obj = assessment.responses.find_by(requirement_id: req.id) || assessment.responses.build(requirement: req) %>
+      <%= form_with model: [assessment, response_obj],
+                    data: { turbo_frame: "row_form_#{req.id}", controller: "auto-save" },
+                    local: false do |f| %>
+        <%= f.hidden_field :level, value: level %>
+        <%= f.hidden_field :requirement_id, value: req.id %>
+        
+        <div class="flex items-center space-x-2">
+          <%= f.check_box :met_requirement, data: { action: "change->auto-save#checkboxChanged" } %>
+          <span class="text-gray-700 text-sm">Met</span>
+        </div>
+        
+        <div class="mt-3">
+          <%= f.label :comment, "Comments", class: "block text-sm font-medium text-gray-700" %>
+          <%= f.text_area :comment, rows: 1,
+                id: "comment_#{req.id}",
+                class: "mt-1 w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500",
+                data: { action: "input->auto-save#commentChanged", auto_save_target: "comment" },
+                "data-turbo-permanent" => "true" %>
+        </div>
       <% end %>
     </turbo-frame>
   </td>

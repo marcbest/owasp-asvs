@@ -1,6 +1,97 @@
-<%= render partial: "assessments/requirement_row",
-           locals: { req: req, assessment: assessment, level: level } %>
+<%# app/views/assessments/_requirement_tree.html.erb %>
+<%
+  # You might already have a "response_obj" (Response) or build a new one if it doesn't exist
+  response_obj = assessment.responses.find_by(requirement_id: req.id) ||
+                 assessment.responses.build(requirement: req)
+%>
+<tr class="hover:bg-gray-50">
+  <!-- ID / Shortcode -->
+  <td class="px-4 py-2" style="padding-left: <%= level * 20 %>px;">
+    <span class="font-semibold text-gray-800">
+      <%= req.shortcode %>
+    </span>
+  </td>
 
+  <!-- Requirement Name & Description -->
+  <td class="px-4 py-2">
+    <div class="text-gray-800 font-medium">
+      <%= req.name %>
+    </div>
+    <% if req.description.present? %>
+      <div class="text-xs text-gray-500">
+        <%= req.description %>
+      </div>
+    <% end %>
+  </td>
+
+  <!-- L1 Required? -->
+  <td class="px-4 py-2 text-center">
+    <% if req.l1_required %>
+      <span class="text-green-600">✓</span>
+    <% else %>
+      <span class="text-gray-400">–</span>
+    <% end %>
+  </td>
+
+  <!-- L2 Required? -->
+  <td class="px-4 py-2 text-center">
+    <% if req.l2_required %>
+      <span class="text-green-600">✓</span>
+    <% else %>
+      <span class="text-gray-400">–</span>
+    <% end %>
+  </td>
+
+  <!-- L3 Required? -->
+  <td class="px-4 py-2 text-center">
+    <% if req.l3_required %>
+      <span class="text-green-600">✓</span>
+    <% else %>
+      <span class="text-gray-400">–</span>
+    <% end %>
+  </td>
+
+  <!-- Applicable (if you want a separate toggle or if "applicable" is stored in response) -->
+  <td class="px-4 py-2 text-center">
+    <!-- Example if you want an "applicable" boolean in Response -->
+    <turbo-frame id="applicable_frame_<%= req.id %>">
+      <%= form_with model: [assessment, response_obj],
+                    data: { turbo_frame: "applicable_frame_#{req.id}", controller: "auto-save" },
+                    local: false do |f| %>
+        <%= f.check_box :applicable, data: { action: "change->auto-save#checkboxChanged" },
+                                   class: "form-checkbox h-4 w-4 text-blue-600" %>
+      <% end %>
+    </turbo-frame>
+  </td>
+
+  <!-- Pass / Met requirement -->
+  <td class="px-4 py-2 text-center">
+    <turbo-frame id="pass_frame_<%= req.id %>">
+      <%= form_with model: [assessment, response_obj],
+                    data: { turbo_frame: "pass_frame_#{req.id}", controller: "auto-save" },
+                    local: false do |f| %>
+        <%= f.check_box :met_requirement, data: { action: "change->auto-save#checkboxChanged" },
+                                        class: "form-checkbox h-4 w-4 text-green-600" %>
+      <% end %>
+    </turbo_frame>
+  </td>
+
+  <!-- Notes / Comments -->
+  <td class="px-4 py-2">
+    <turbo-frame id="notes_frame_<%= req.id %>">
+      <%= form_with model: [assessment, response_obj],
+                    data: { turbo_frame: "notes_frame_#{req.id}", controller: "auto-save" },
+                    local: false do |f| %>
+        <%= f.text_area :comment,
+                        rows: 1,
+                        class: "w-full px-2 py-1 border border-gray-300 rounded focus:ring focus:border-blue-500 text-sm",
+                        data: { action: "input->auto-save#commentChanged", auto_save_target: "comment" } %>
+      <% end %>
+    </turbo_frame>
+  </td>
+</tr>
+
+<!-- Recursively render child requirements -->
 <% if req.children.any? %>
   <% req.children.each do |child| %>
     <%= render partial: "assessments/requirement_tree",
