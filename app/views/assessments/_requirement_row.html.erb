@@ -22,23 +22,51 @@
       <%= req.description %>
     </p>
   </td>
-  
-  <!-- Response Form -->
-  <td class="px-6 py-4">
-    <turbo-frame id="row_form_<%= req.id %>">
+
+  <!-- Applicable Checkbox -->
+  <td class="px-6 py-4 text-center">
+    <turbo-frame id="applicable_frame_<%= req.id %>">
       <% response_obj = assessment.responses.find_by(requirement_id: req.id) || assessment.responses.build(requirement: req) %>
       <%= form_with model: [assessment, response_obj],
-                    data: { turbo_frame: "row_form_#{req.id}", controller: "auto-save" },
+                    data: { turbo_frame: "applicable_frame_#{req.id}", controller: "auto-save" },
                     local: false do |f| %>
         <%= f.hidden_field :level, value: level %>
         <%= f.hidden_field :requirement_id, value: req.id %>
-        
-        <div class="flex items-center space-x-2">
-          <%= f.check_box :met_requirement, data: { action: "change->auto-save#checkboxChanged" } %>
-          <span class="text-gray-700 text-sm">Met</span>
+        <div class="flex items-center justify-center">
+          <%= f.check_box :applicable, data: { action: "change->auto-save#checkboxChanged" },
+                            class: "form-checkbox h-4 w-4 text-blue-600" %>
         </div>
-        
-        <div class="mt-3">
+      <% end %>
+    </turbo-frame>
+  </td>
+
+  <!-- Pass / Met Requirement Checkbox -->
+  <td class="px-6 py-4 text-center">
+    <turbo-frame id="pass_frame_<%= req.id %>">
+      <% response_obj ||= assessment.responses.find_by(requirement_id: req.id) || assessment.responses.build(requirement: req) %>
+      <%= form_with model: [assessment, response_obj],
+                    data: { turbo_frame: "pass_frame_#{req.id}", controller: "auto-save" },
+                    local: false do |f| %>
+        <%= f.hidden_field :level, value: level %>
+        <%= f.hidden_field :requirement_id, value: req.id %>
+        <div class="flex items-center justify-center">
+          <%= f.check_box :met_requirement, data: { action: "change->auto-save#checkboxChanged" },
+                                    class: "form-checkbox h-4 w-4 text-green-600" %>
+        </div>
+      <% end %>
+    </turbo-frame>
+  </td>
+
+  <!-- Notes / Comments -->
+  <td class="px-6 py-4">
+    <turbo-frame id="notes_frame_<%= req.id %>">
+      <% response_obj ||= assessment.responses.find_by(requirement_id: req.id) || assessment.responses.build(requirement: req) %>
+      <%= form_with model: [assessment, response_obj],
+                    data: { turbo_frame: "notes_frame_#{req.id}", controller: "auto-save" },
+                    local: false do |f| %>
+        <%= f.hidden_field :level, value: level %>
+        <%= f.hidden_field :requirement_id, value: req.id %>
+        <div>
           <%= f.label :comment, "Comments", class: "block text-sm font-medium text-gray-700" %>
           <%= f.text_area :comment, rows: 1,
                 id: "comment_#{req.id}",
@@ -50,9 +78,11 @@
     </turbo-frame>
   </td>
 </tr>
+
+<%# Recursively render child requirements if any %>
 <% if req.children.any? %>
-  <%= render partial: "assessments/requirement_row",
-             collection: req.children,
-             as: :req,
-             locals: { assessment: assessment, level: level + 1 } %>
+  <% req.children.each do |child| %>
+    <%= render partial: "assessments/requirement_row",
+               locals: { req: child, assessment: assessment, level: level + 1 } %>
+  <% end %>
 <% end %>

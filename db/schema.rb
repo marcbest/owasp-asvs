@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_20_225641) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_21_153554) do
   create_table "assessments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "asvs_version_id", null: false
@@ -56,6 +56,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_225641) do
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "applicable"
     t.index ["assessment_id"], name: "index_responses_on_assessment_id"
     t.index ["requirement_id"], name: "index_responses_on_requirement_id"
   end

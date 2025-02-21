@@ -1,3 +1,4 @@
+# app/controllers/responses_controller.rb
 class ResponsesController < ApplicationController
   before_action :set_assessment
 
@@ -5,11 +6,6 @@ class ResponsesController < ApplicationController
     @level = response_params[:level].to_i
     @response = @assessment.responses.build(response_params.except(:level))
     
-    # Ensure the requirement is loaded if it isn’t already
-    if @response.requirement.nil? && response_params[:requirement_id].present?
-      @response.requirement = Requirement.find(response_params[:requirement_id])
-    end
-
     if @response.save
       respond_to do |format|
         format.turbo_stream do
@@ -31,8 +27,6 @@ class ResponsesController < ApplicationController
     @level = response_params[:level].to_i
 
     if @response.update(response_params.except(:level))
-      # In case @response.requirement somehow ends up nil (shouldn't happen), load it
-      @response.requirement ||= Requirement.find(response_params[:requirement_id]) if response_params[:requirement_id].present?
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace(
@@ -55,7 +49,7 @@ class ResponsesController < ApplicationController
   end
 
   def response_params
-    params.require(:response).permit(:requirement_id, :met_requirement, :comment, :level)
+    params.require(:response).permit(:requirement_id, :met_requirement, :comment, :level, :applicable)
   end
 
   def respond_with_error(response)
