@@ -2,6 +2,7 @@ class Assessment < ApplicationRecord
   belongs_to :user
   belongs_to :asvs_version
   has_many :responses, dependent: :destroy
+  has_many :sharing_urls, dependent: :destroy
 
   # Automatically create a response for each requirement in the ASVS version
   # with applicable defaulting to true.

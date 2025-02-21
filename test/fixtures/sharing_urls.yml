@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  assessment: one
+  user: one
+  uuid: MyString
+  expires_at: 2025-02-21 21:03:56
+  description: MyString
+
+two:
+  assessment: two
+  user: two
+  uuid: MyString
+  expires_at: 2025-02-21 21:03:56
+  description: MyString

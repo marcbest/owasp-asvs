@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_21_153554) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_21_210356) do
   create_table "assessments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "asvs_version_id", null: false
@@ -61,6 +61,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_21_153554) do
     t.index ["requirement_id"], name: "index_responses_on_requirement_id"
   end
 
+  create_table "sharing_urls", force: :cascade do |t|
+    t.integer "assessment_id", null: false
+    t.integer "user_id", null: false
+    t.string "uuid"
+    t.datetime "expires_at"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_sharing_urls_on_assessment_id"
+    t.index ["user_id"], name: "index_sharing_urls_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -78,4 +90,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_21_153554) do
   add_foreign_key "requirements", "asvs_versions"
   add_foreign_key "responses", "assessments"
   add_foreign_key "responses", "requirements"
+  add_foreign_key "sharing_urls", "assessments"
+  add_foreign_key "sharing_urls", "users"
 end
