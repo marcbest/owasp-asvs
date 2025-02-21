@@ -8,18 +8,13 @@ class ResponsesController < ApplicationController
     if @response.save
       respond_to do |format|
         format.turbo_stream do
-          # Replace the entire <tr> with id="row_#{@response.requirement_id}"
           render turbo_stream: turbo_stream.replace(
             "row_#{@response.requirement_id}",
             partial: "assessments/requirement_row",
-            locals: {
-              req: @response.requirement,
-              assessment: @assessment,
-              level: @level
-            }
+            locals: { req: @response.requirement, assessment: @assessment, level: @level }
           )
         end
-        format.html { redirect_to @assessment, notice: "Response created." }
+        format.html { redirect_to @assessment, notice: "Response saved." }
       end
     else
       respond_with_error(@response)
@@ -33,15 +28,10 @@ class ResponsesController < ApplicationController
     if @response.update(response_params.except(:level))
       respond_to do |format|
         format.turbo_stream do
-          # Replace the entire <tr> with id="row_#{@response.requirement_id}"
           render turbo_stream: turbo_stream.replace(
             "row_#{@response.requirement_id}",
             partial: "assessments/requirement_row",
-            locals: {
-              req: @response.requirement,
-              assessment: @assessment,
-              level: @level
-            }
+            locals: { req: @response.requirement, assessment: @assessment, level: @level }
           )
         end
         format.html { redirect_to @assessment, notice: "Response updated." }
@@ -67,11 +57,7 @@ class ResponsesController < ApplicationController
         render turbo_stream: turbo_stream.replace(
           "row_#{response.requirement_id}",
           partial: "assessments/requirement_row",
-          locals: {
-            req: response.requirement,
-            assessment: @assessment,
-            level: @level
-          }
+          locals: { req: response.requirement, assessment: @assessment, level: @level }
         )
       end
       format.html { redirect_to @assessment, alert: "Error saving response." }

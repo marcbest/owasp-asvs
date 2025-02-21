@@ -2,8 +2,8 @@
 # check=error=true
 
 # This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
-# docker build -t owasp_asvs .
-# docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name owasp_asvs owasp_asvs
+# docker build -t owasp-asvs .
+# docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name owasp-asvs owasp-asvs
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 
