@@ -1,30 +1,47 @@
+<%
+  # Ensure target_level is always valid (1, 2, or 3)
+  target_level = params[:target_level].to_i
+  target_level = 1 unless [1, 2, 3].include?(target_level)
+
+  # Get all applicable requirements at the selected level
+  applicable_requirements = @assessment.responses
+                                       .joins(:requirement)
+                                       .where("requirements.l#{target_level}_required = ?", true)
+                                       .where(applicable: true)
+
+  total_requirements = applicable_requirements.count
+  passed_requirements = applicable_requirements.where(met_requirement: true).count
+  progress_percentage = total_requirements > 0 ? ((passed_requirements.to_f / total_requirements) * 100).round(2) : 0
+%>
+
 <div class="max-w-screen-2xl mx-auto bg-white shadow rounded-lg p-6">
   <!-- Header / Title Row -->
   <div class="flex items-center justify-between mb-4">
     <div>
       <h1 class="text-2xl font-bold text-gray-800">
-        <%= @assessment.asvs_version.name %> – Level <%= params[:target_level] || "1" %>
+        <%= @assessment.asvs_version.name %> – Level <%= target_level %>
       </h1>
-      <!-- Example static progress text; you’d replace with real progress stats -->
+      <!-- Dynamic progress text -->
       <p class="text-sm text-gray-500">
-        Checklist: 79.75% all pass, total: 121
+        Checklist: <%= progress_percentage %>% all pass, total: <%= total_requirements %>
       </p>
     </div>
     <div class="space-x-2">
       <label for="target_level" class="text-sm font-medium text-gray-700">Target Level:</label>
       <!-- This could be a simple select or form to update target_level -->
-      <select id="target_level" name="target_level" class="border-gray-300 rounded px-2 py-1 text-sm">
-        <option value="1" selected>Level 1</option>
-        <option value="2">Level 2</option>
-        <option value="3">Level 3</option>
+      <select id="target_level" name="target_level"
+              class="border-gray-300 rounded px-2 py-1 text-sm"
+              onchange="window.location.href = '?target_level=' + this.value">
+        <option value="1" <%= "selected" if target_level == 1 %>>Level 1</option>
+        <option value="2" <%= "selected" if target_level == 2 %>>Level 2</option>
+        <option value="3" <%= "selected" if target_level == 3 %>>Level 3</option>
       </select>
     </div>
   </div>
 
-  <!-- Example of a horizontal progress bar -->
+  <!-- Dynamic horizontal progress bar -->
   <div class="w-full bg-gray-200 h-2 rounded mb-6">
-    <!-- Suppose you dynamically set the width with a style binding -->
-    <div class="bg-blue-500 h-2 rounded" style="width: 80%"></div>
+    <div class="bg-blue-500 h-2 rounded" style="width: <%= progress_percentage %>%"></div>
   </div>
 
   <!-- Requirements Table -->
