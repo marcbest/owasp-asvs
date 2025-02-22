@@ -2,17 +2,30 @@
   # Ensure target_level is always valid (1, 2, or 3)
   target_level = params[:target_level].to_i
   target_level = 1 unless [1, 2, 3].include?(target_level)
-
   # Get all applicable requirements at the selected level
   applicable_requirements = @assessment.responses
                                        .joins(:requirement)
                                        .where("requirements.l#{target_level}_required = ?", true)
                                        .where(applicable: true)
-
   total_requirements = applicable_requirements.count
   passed_requirements = applicable_requirements.where(met_requirement: true).count
   progress_percentage = total_requirements > 0 ? ((passed_requirements.to_f / total_requirements) * 100).round(2) : 0
 %>
+
+<!-- Share Button Container -->
+<div class="max-w-screen-2xl mx-auto mb-4" data-controller="modal">
+  <div class="flex justify-end">
+    <button data-action="modal#open"
+            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+      </svg>
+      Share
+    </button>
+  </div>
+  
+  <%= render partial: "sharing_modal" %>
+</div>
 
 <div class="max-w-screen-2xl mx-auto bg-white shadow rounded-lg p-6">
   <!-- Sticky Progress Bar -->
@@ -37,7 +50,6 @@
         </select>
       </div>
     </div>
-
     <!-- Floating Progress Bar -->
     <div class="w-full bg-gray-200 h-2 rounded mt-2">
       <div class="bg-blue-500 h-2 rounded transition-all duration-300"
