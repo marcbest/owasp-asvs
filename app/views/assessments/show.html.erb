@@ -15,37 +15,38 @@
 %>
 
 <div class="max-w-screen-2xl mx-auto bg-white shadow rounded-lg p-6">
-  <!-- Header / Title Row -->
-  <div class="flex items-center justify-between mb-4">
-    <div>
-      <h1 class="text-2xl font-bold text-gray-800">
-        <%= @assessment.asvs_version.name %> – Level <%= target_level %>
-      </h1>
-      <!-- Dynamic progress text -->
-      <p class="text-sm text-gray-500">
-        Checklist: <%= progress_percentage %>% all pass, total: <%= total_requirements %>
-      </p>
+  <!-- Sticky Progress Bar -->
+  <div class="sticky top-0 left-0 w-full bg-white shadow-md z-10 p-4">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-800">
+          <%= @assessment.asvs_version.name %> – Level <%= target_level %>
+        </h1>
+        <p class="text-sm text-gray-500">
+          Checklist: <%= progress_percentage %>% all pass, total: <%= total_requirements %>
+        </p>
+      </div>
+      <div class="space-x-2">
+        <label for="target_level" class="text-sm font-medium text-gray-700">Target Level:</label>
+        <select id="target_level" name="target_level"
+                class="border-gray-300 rounded px-2 py-1 text-sm"
+                onchange="window.location.href = '?target_level=' + this.value">
+          <option value="1" <%= "selected" if target_level == 1 %>>Level 1</option>
+          <option value="2" <%= "selected" if target_level == 2 %>>Level 2</option>
+          <option value="3" <%= "selected" if target_level == 3 %>>Level 3</option>
+        </select>
+      </div>
     </div>
-    <div class="space-x-2">
-      <label for="target_level" class="text-sm font-medium text-gray-700">Target Level:</label>
-      <!-- This could be a simple select or form to update target_level -->
-      <select id="target_level" name="target_level"
-              class="border-gray-300 rounded px-2 py-1 text-sm"
-              onchange="window.location.href = '?target_level=' + this.value">
-        <option value="1" <%= "selected" if target_level == 1 %>>Level 1</option>
-        <option value="2" <%= "selected" if target_level == 2 %>>Level 2</option>
-        <option value="3" <%= "selected" if target_level == 3 %>>Level 3</option>
-      </select>
-    </div>
-  </div>
 
-  <!-- Dynamic horizontal progress bar -->
-  <div class="w-full bg-gray-200 h-2 rounded mb-6">
-    <div class="bg-blue-500 h-2 rounded" style="width: <%= progress_percentage %>%"></div>
+    <!-- Floating Progress Bar -->
+    <div class="w-full bg-gray-200 h-2 rounded mt-2">
+      <div class="bg-blue-500 h-2 rounded transition-all duration-300"
+           style="width: <%= progress_percentage %>%"></div>
+    </div>
   </div>
 
   <!-- Requirements Table -->
-  <div class="overflow-x-auto">
+  <div class="overflow-x-auto mt-4">
     <table class="min-w-full border border-gray-200 text-sm">
       <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
         <tr>
