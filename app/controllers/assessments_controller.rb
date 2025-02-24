@@ -46,6 +46,6 @@ class AssessmentsController < ApplicationController
   end
 
   def assessment_params
-    params.require(:assessment).permit(:asvs_version_id)
+    params.require(:assessment).permit(:asvs_version_id, :name)
   end
 end

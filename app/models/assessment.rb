@@ -4,6 +4,9 @@ class Assessment < ApplicationRecord
   has_many :responses, dependent: :destroy
   has_many :sharing_urls, dependent: :destroy
 
+  validates :name, presence: true
+
+
   # Automatically create a response for each requirement in the ASVS version
   # with applicable defaulting to true.
   after_create :initialize_responses
