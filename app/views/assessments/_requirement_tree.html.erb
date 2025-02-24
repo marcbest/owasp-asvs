@@ -74,9 +74,9 @@
                         data: { turbo_frame: "notes_frame_#{req.id}", controller: "auto-save" },
                         local: false do |f| %>
             <%= f.text_area :comment,
-                           rows: 3,
+                           rows: 2,
                            placeholder: "Add notes here...",
-                           class: "w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm min-h-[5rem] min-w-[250px] transition-all duration-200 ease-in-out hover:border-blue-300",
+                           class: "w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm min-h-[3.5rem] min-w-[250px] transition-all duration-200 ease-in-out hover:border-blue-300",
                            data: { 
                              action: "input->auto-save#commentChanged input->expanding-textarea#resize focus->expanding-textarea#expandOnFocus blur->expanding-textarea#collapseOnBlur", 
                              auto_save_target: "comment",
