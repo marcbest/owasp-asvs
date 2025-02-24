@@ -65,18 +65,24 @@
       <% end %>
     </td>
     <!-- Notes / Comments -->
-    <td class="px-4 py-2">
+    <td class="px-4 py-2 min-w-[300px]">
       <% if read_only %>
-        <div class="text-sm text-gray-700"><%= response_obj.comment %></div>
+        <div class="text-sm text-gray-700 whitespace-pre-wrap"><%= response_obj.comment %></div>
       <% else %>
-        <turbo-frame id="notes_frame_<%= req.id %>">
+        <turbo-frame id="notes_frame_<%= req.id %>" data-controller="expanding-textarea">
           <%= form_with model: [assessment, response_obj],
                         data: { turbo_frame: "notes_frame_#{req.id}", controller: "auto-save" },
                         local: false do |f| %>
             <%= f.text_area :comment,
-                           rows: 1,
-                           class: "w-full px-2 py-1 border border-gray-300 rounded focus:ring focus:border-blue-500 text-sm",
-                           data: { action: "input->auto-save#commentChanged", auto_save_target: "comment" } %>
+                           rows: 3,
+                           placeholder: "Add notes here...",
+                           class: "w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm min-h-[5rem] min-w-[250px] transition-all duration-200 ease-in-out hover:border-blue-300",
+                           data: { 
+                             action: "input->auto-save#commentChanged input->expanding-textarea#resize focus->expanding-textarea#expandOnFocus blur->expanding-textarea#collapseOnBlur", 
+                             auto_save_target: "comment",
+                             expanding_textarea_target: "textarea",
+                             expanding_textarea_max_rows: 10 
+                           } %>
           <% end %>
         </turbo-frame>
       <% end %>
