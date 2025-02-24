@@ -1,5 +1,5 @@
 <div class="space-y-3">
-  <% urls.order(created_at: :desc).each do |url| %>
+  <% (urls.is_a?(Array) ? urls.sort_by { |url| url.created_at }.reverse : urls.order(created_at: :desc)).each do |url| %>
     <%= turbo_frame_tag dom_id(url) do %>
       <div class="flex items-start justify-between p-4 bg-white border border-gray-200 rounded-lg hover:shadow-sm transition-shadow">
         <div class="flex-1 min-w-0">
