@@ -1,4 +1,6 @@
 class SharingUrlsController < ApplicationController
+  include ActionView::RecordIdentifier
+  
   before_action :set_assessment, only: [:index, :create, :destroy]
   before_action :authenticate_user!, except: [:show]
 
@@ -23,14 +25,19 @@ class SharingUrlsController < ApplicationController
     )
 
     respond_to do |format|
-      format.turbo_stream
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.append(
+          "sharing_urls_list",
+          partial: "sharing_urls/list",
+          locals: { urls: [@sharing_url] }
+        )
+      end
       format.html { redirect_to assessment_sharing_urls_path(@assessment), notice: "Sharing link created!" }
     end
   end
 
   def show
     @sharing_url = SharingUrl.find_by(uuid: params[:uuid])
-
     if @sharing_url&.expired?
       render plain: "This assessment sharing link has expired.", status: :gone
     else
@@ -44,7 +51,7 @@ class SharingUrlsController < ApplicationController
     @sharing_url.destroy
 
     respond_to do |format|
-      format.turbo_stream
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(@sharing_url)) }
       format.html { redirect_to assessment_sharing_urls_path(@assessment), notice: "Sharing link removed." }
     end
   end
