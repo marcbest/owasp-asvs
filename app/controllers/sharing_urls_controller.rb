@@ -38,14 +38,16 @@ class SharingUrlsController < ApplicationController
 
   def show
     @sharing_url = SharingUrl.find_by(uuid: params[:uuid])
+    
     if @sharing_url&.expired?
       render plain: "This assessment sharing link has expired.", status: :gone
     else
       @assessment = @sharing_url.assessment
+      @read_only = true  # Add this flag to indicate shared/read-only mode
       render "assessments/show"
     end
   end
-
+  
   def destroy
     @sharing_url = @assessment.sharing_urls.find(params[:id])
     @sharing_url.destroy

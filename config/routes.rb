@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     root to: "assessments#index", as: :authenticated_root
 
     resources :assessments, only: [:index, :new, :create, :show, :edit, :update] do
+      member do
+        get :export
+      end
       resources :responses, only: [:create, :update]
       resources :sharing_urls, only: [:index, :create, :destroy]
     end

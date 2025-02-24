@@ -3,25 +3,50 @@
      style="background-color: rgba(75, 85, 99, 0.75);">
   <div class="flex items-center justify-center min-h-screen p-4">
     <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg relative">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-xl font-bold text-gray-900">Share Assessment</h2>
+      <!-- Header with improved styling -->
+      <div class="flex justify-between items-center mb-6 border-b border-gray-200 pb-4">
+        <h2 class="text-xl font-bold text-gray-900">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+          </svg>
+          Share Assessment
+        </h2>
+        <!-- Close button in header -->
+        <button type="button" 
+                class="text-gray-400 hover:text-gray-500 focus:outline-none"
+                data-action="click->modal#close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
-
-      <div id="sharing_url_form">
+      
+      <!-- Create new share link form -->
+      <div id="sharing_url_form" class="bg-gray-50 p-4 rounded-lg mb-6">
         <%= render partial: "sharing_urls/form", locals: { assessment: @assessment } %>
       </div>
-
-      <div class="mt-8 border-t border-gray-200 pt-6">
-        <h4 class="text-sm font-medium text-gray-900 mb-3">Existing Share Links</h4>
-        <div id="sharing_urls_list">
+      
+      <!-- Existing share links with improved styling -->
+      <div class="mt-4">
+        <h4 class="text-sm font-medium text-gray-900 mb-3 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+          </svg>
+          Existing Share Links
+        </h4>
+        <div id="sharing_urls_list" class="max-h-72 overflow-y-auto pr-1">
           <%= render partial: "sharing_urls/list", locals: { urls: @assessment.sharing_urls.active } %>
         </div>
       </div>
-
-      <div class="mt-6 border-t border-gray-200 pt-4">
+      
+      <!-- Footer with close button -->
+      <div class="mt-6 pt-4 border-t border-gray-200 flex justify-end">
         <button type="button" 
-                class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                class="inline-flex justify-center items-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 data-action="click->modal#close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
           Close
         </button>
       </div>

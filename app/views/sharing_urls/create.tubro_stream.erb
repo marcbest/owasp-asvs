@@ -1,7 +1,6 @@
 <%= turbo_stream.replace "sharing_urls_list" do %>
-  <%= render partial: "sharing_urls/list", locals: { urls: @assessment.sharing_urls.active } %>
+  <%= render partial: "sharing_urls/list", locals: { urls: @assessment.sharing_urls.active.order(created_at: :desc) } %>
 <% end %>
-
 <%= turbo_stream.update "sharing_url_form" do %>
   <%= render partial: "sharing_urls/form", locals: { assessment: @assessment } %>
 <% end %>

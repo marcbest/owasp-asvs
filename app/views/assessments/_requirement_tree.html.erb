@@ -2,14 +2,13 @@
   # Ensure response_obj is initialized correctly
   response_obj = assessment.responses.find_by(requirement_id: req.id) ||
                  assessment.responses.build(requirement: req)
-
   # Check if the requirement has at least one level
   has_requirements = req.l1_required || req.l2_required || req.l3_required
-
   # Check if this is a top-level requirement (section header)
   is_section_header = req.parent_id.nil?
+  # Set read_only to false by default if not provided
+  read_only ||= false
 %>
-
 <tr class="hover:bg-gray-50">
   <!-- ID / Shortcode -->
   <td class="px-4 py-2" style="padding-left: <%= level * 20 %>px;">
@@ -17,7 +16,6 @@
       <%= req.shortcode %>
     </span>
   </td>
-
   <!-- Requirement Name & Description -->
   <td class="px-4 py-2">
     <div class="text-gray-800 font-medium">
@@ -29,64 +27,69 @@
       </div>
     <% end %>
   </td>
-
   <% if has_requirements %>
     <!-- L1 Required? -->
     <td class="px-4 py-2 text-center"><%= req.l1_required ? "✓" : "—" %></td>
-
     <!-- L2 Required? -->
     <td class="px-4 py-2 text-center"><%= req.l2_required ? "✓" : "—" %></td>
-
     <!-- L3 Required? -->
     <td class="px-4 py-2 text-center"><%= req.l3_required ? "✓" : "—" %></td>
-
     <!-- Applicable Checkbox -->
     <td class="px-4 py-2 text-center">
-      <turbo-frame id="applicable_frame_<%= req.id %>">
-        <%= form_with model: [assessment, response_obj],
-                      data: { turbo_frame: "applicable_frame_#{req.id}", controller: "auto-save" },
-                      local: false do |f| %>
-          <%= f.check_box :applicable, data: { action: "change->auto-save#checkboxChanged" },
-                                     class: "form-checkbox h-4 w-4 text-blue-600" %>
-        <% end %>
-      </turbo-frame>
+      <% if read_only %>
+        <%= response_obj.applicable? ? "✓" : "—" %>
+      <% else %>
+        <turbo-frame id="applicable_frame_<%= req.id %>">
+          <%= form_with model: [assessment, response_obj],
+                        data: { turbo_frame: "applicable_frame_#{req.id}", controller: "auto-save" },
+                        local: false do |f| %>
+            <%= f.check_box :applicable, data: { action: "change->auto-save#checkboxChanged" },
+                                       class: "form-checkbox h-4 w-4 text-blue-600" %>
+          <% end %>
+        </turbo-frame>
+      <% end %>
     </td>
-
     <!-- Pass / Met requirement -->
     <td class="px-4 py-2 text-center">
-      <turbo-frame id="pass_frame_<%= req.id %>">
-        <%= form_with model: [assessment, response_obj],
-                      data: { turbo_frame: "pass_frame_#{req.id}", controller: "auto-save" },
-                      local: false do |f| %>
-          <%= f.check_box :met_requirement, data: { action: "change->auto-save#checkboxChanged" },
+      <% if read_only %>
+        <%= response_obj.met_requirement? ? "✓" : "—" %>
+      <% else %>
+        <turbo-frame id="pass_frame_<%= req.id %>">
+          <%= form_with model: [assessment, response_obj],
+                        data: { turbo_frame: "pass_frame_#{req.id}", controller: "auto-save" },
+                        local: false do |f| %>
+            <%= f.check_box :met_requirement, data: { action: "change->auto-save#checkboxChanged" },
                                           class: "form-checkbox h-4 w-4 text-green-600" %>
-        <% end %>
-      </turbo-frame>
+          <% end %>
+        </turbo-frame>
+      <% end %>
     </td>
-
     <!-- Notes / Comments -->
     <td class="px-4 py-2">
-      <turbo-frame id="notes_frame_<%= req.id %>">
-        <%= form_with model: [assessment, response_obj],
-                      data: { turbo_frame: "notes_frame_#{req.id}", controller: "auto-save" },
-                      local: false do |f| %>
-          <%= f.text_area :comment,
-                          rows: 1,
-                          class: "w-full px-2 py-1 border border-gray-300 rounded focus:ring focus:border-blue-500 text-sm",
-                          data: { action: "input->auto-save#commentChanged", auto_save_target: "comment" } %>
-        <% end %>
-      </turbo-frame>
+      <% if read_only %>
+        <div class="text-sm text-gray-700"><%= response_obj.comment %></div>
+      <% else %>
+        <turbo-frame id="notes_frame_<%= req.id %>">
+          <%= form_with model: [assessment, response_obj],
+                        data: { turbo_frame: "notes_frame_#{req.id}", controller: "auto-save" },
+                        local: false do |f| %>
+            <%= f.text_area :comment,
+                           rows: 1,
+                           class: "w-full px-2 py-1 border border-gray-300 rounded focus:ring focus:border-blue-500 text-sm",
+                           data: { action: "input->auto-save#commentChanged", auto_save_target: "comment" } %>
+          <% end %>
+        </turbo-frame>
+      <% end %>
     </td>
   <% else %>
     <!-- If this is a section header or a child with no level requirements, fill the space -->
     <td class="px-4 py-2 text-center" colspan="6"></td>
   <% end %>
 </tr>
-
 <!-- Always Render Children (Even if they have no requirements) -->
 <% if req.children.any? %>
   <% req.children.each do |child| %>
     <%= render partial: "assessments/requirement_tree",
-               locals: { req: child, assessment: assessment, level: level + 1 } %>
+               locals: { req: child, assessment: assessment, level: level + 1, read_only: read_only } %>
   <% end %>
 <% end %>
