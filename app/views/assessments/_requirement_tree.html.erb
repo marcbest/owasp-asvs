@@ -19,11 +19,13 @@
   <!-- Requirement Name & Description -->
   <td class="px-4 py-2">
     <div class="text-gray-800 font-medium">
-      <%= req.name %>
+      <% if req.name.present? %>
+        <%= raw req.name.gsub(/\[([^\]]+)\]\(([^)]+)\)/, '<a href="\2" target="_blank" class="text-blue-600 hover:underline">\1</a>') %>
+      <% end %>
     </div>
     <% if req.description.present? %>
       <div class="text-xs text-gray-500">
-        <%= req.description %>
+        <%= raw req.description.gsub(/\[([^\]]+)\]\(([^)]+)\)/, '<a href="\2" target="_blank" class="text-blue-600 hover:underline">\1</a>') %>
       </div>
     <% end %>
   </td>
