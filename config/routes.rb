@@ -18,4 +18,7 @@ Rails.application.routes.draw do
   end
   get "shared/:uuid", to: "sharing_urls#show", as: :shared_assessment
   get "home", to: "static#home"
+
+  get "/up" => proc { [200, {}, ["OK"]] }
+
 end
