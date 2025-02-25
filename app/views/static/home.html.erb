@@ -1,88 +1,275 @@
-<div class="relative w-full bg-gradient-to-br from-blue-500 to-blue-700 text-white py-20 px-6">
-  <div class="max-w-4xl mx-auto text-center">
-    <h1 class="text-5xl font-extrabold leading-tight">OWASP ASVS Assessment Tool</h1>
-    <p class="mt-4 text-lg text-blue-100">
-      A simple, open-source tool to help security professionals, developers, and auditors 
-      assess web applications against the 
-      <strong>OWASP Application Security Verification Standard (ASVS)</strong>.
+<!-- Hero Section -->
+<div class="relative w-full bg-gradient-to-br from-blue-600 to-indigo-800 text-white py-24 px-6 shadow-lg">
+  <div class="max-w-5xl mx-auto">
+    <div class="flex flex-col md:flex-row items-center">
+      <div class="md:w-3/5">
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">Simplify Your Application Security Verification</h1>
+        <p class="mt-6 text-xl text-blue-100">
+          A powerful, intuitive platform for conducting <strong>OWASP Application Security Verification Standard (ASVS)</strong> assessments that helps you build more secure applications.
+        </p>
+
+        <div class="mt-8 flex flex-col sm:flex-row gap-4">
+          <%= link_to new_user_registration_path, class: "inline-flex items-center justify-center bg-white text-blue-700 px-6 py-3 rounded-lg text-lg font-medium hover:bg-blue-50 transition shadow-md" do %>
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            Create Free Account
+          <% end %>
+          
+          <a href="https://owasp.org/www-project-application-security-verification-standard/"
+             target="_blank"
+             class="inline-flex items-center justify-center border-2 border-white text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-white hover:text-blue-700 transition">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Learn About ASVS
+          </a>
+        </div>
+      </div>
+      <div class="md:w-2/5 mt-10 md:mt-0 flex justify-center">
+        <div class="relative w-64 h-64 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">
+          <svg class="w-40 h-40 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- What is ASVS Section -->
+<div class="max-w-6xl mx-auto py-16 px-6">
+  <div class="text-center">
+    <h2 class="text-3xl font-bold text-gray-900">What is OWASP ASVS?</h2>
+    <div class="w-16 h-1 mx-auto bg-blue-600 my-4"></div>
+    <p class="max-w-3xl mx-auto text-lg text-gray-600">
+      The <strong>OWASP Application Security Verification Standard (ASVS)</strong> is a framework of security requirements and controls that defines increasing levels of application security verification. It helps organizations build and maintain secure applications and can be used to establish a level of confidence in the security of web applications.
     </p>
+  </div>
 
-    <div class="mt-6 flex flex-col sm:flex-row justify-center gap-4">
+  <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center text-center">
+      <div class="bg-blue-100 p-3 rounded-full mb-4">
+        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+      </div>
+      <h3 class="text-xl font-semibold text-gray-900">Security Requirements</h3>
+      <p class="mt-3 text-gray-600">
+        Provides a comprehensive set of requirements for building secure applications across different security domains.
+      </p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center text-center">
+      <div class="bg-green-100 p-3 rounded-full mb-4">
+        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+        </svg>
+      </div>
+      <h3 class="text-xl font-semibold text-gray-900">Multiple Security Levels</h3>
+      <p class="mt-3 text-gray-600">
+        Defines three security verification levels (1-3) to match different application risk profiles and security needs.
+      </p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center text-center">
+      <div class="bg-purple-100 p-3 rounded-full mb-4">
+        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+        </svg>
+      </div>
+      <h3 class="text-xl font-semibold text-gray-900">Industry Standard</h3>
+      <p class="mt-3 text-gray-600">
+        Widely adopted by organizations around the world as a benchmark for application security verification.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- About This Tool Section -->
+<div class="bg-gray-50 py-16 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold text-gray-900">About This Tool</h2>
+      <div class="w-16 h-1 mx-auto bg-blue-600 my-4"></div>
+      <p class="max-w-3xl mx-auto text-lg text-gray-600">
+        Our OWASP ASVS Assessment Tool simplifies the process of evaluating your applications against the ASVS framework, making security verification more accessible and manageable.
+      </p>
+    </div>
+
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div class="bg-white p-8 rounded-lg shadow-md">
+        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Key Features</h3>
+        
+        <ul class="space-y-4">
+          <li class="flex items-start">
+            <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <div>
+              <h4 class="font-medium text-gray-900">Comprehensive ASVS Coverage</h4>
+              <p class="text-gray-600 text-sm">Access all ASVS requirements across different versions and security levels.</p>
+            </div>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <div>
+              <h4 class="font-medium text-gray-900">Interactive Assessment Workflow</h4>
+              <p class="text-gray-600 text-sm">Track verification status, add evidence, and document findings in a structured format.</p>
+            </div>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <div>
+              <h4 class="font-medium text-gray-900">Progress Visualization</h4>
+              <p class="text-gray-600 text-sm">Get real-time insights into your assessment progress with visual dashboards.</p>
+            </div>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <div>
+              <h4 class="font-medium text-gray-900">Reporting Capabilities</h4>
+              <p class="text-gray-600 text-sm">Generate detailed reports to document compliance and security posture.</p>
+            </div>
+          </li>
+          <li class="flex items-start">
+            <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <div>
+              <h4 class="font-medium text-gray-900">Assessment Sharing</h4>
+              <p class="text-gray-600 text-sm">Create secure sharing links to collaborate with clients and auditors on assessments.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="flex flex-col justify-center">
+        <h3 class="text-2xl font-semibold text-gray-900 mb-6">Why Use This Tool?</h3>
+        
+        <div class="space-y-6">
+          <div class="flex items-start">
+            <div class="flex-shrink-0 bg-blue-600 p-3 rounded-full">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-lg font-medium text-gray-900">Streamline Security Assessments</h4>
+              <p class="text-gray-600">Replace spreadsheets and manual tracking with an intuitive, purpose-built tool.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <div class="flex-shrink-0 bg-blue-600 p-3 rounded-full">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-lg font-medium text-gray-900">Enhance Application Security</h4>
+              <p class="text-gray-600">Systematically identify and address security gaps using industry best practices.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <div class="flex-shrink-0 bg-blue-600 p-3 rounded-full">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-lg font-medium text-gray-900">Collaborate Effectively</h4>
+              <p class="text-gray-600">Enable teams to work together seamlessly on security assessments and verification.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <div class="flex-shrink-0 bg-blue-600 p-3 rounded-full">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-lg font-medium text-gray-900">Share with Clients and Auditors</h4>
+              <p class="text-gray-600">Generate secure sharing links to provide assessment access to clients and external auditors.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Getting Started Section -->
+<div class="max-w-6xl mx-auto py-16 px-6">
+  <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl shadow-lg overflow-hidden">
+    <div class="md:flex">
+      <div class="md:w-1/2 p-10 text-white">
+        <h2 class="text-3xl font-bold">Ready to Get Started?</h2>
+        <p class="mt-4 text-blue-100 text-lg">
+          Join hundreds of security professionals and developers who are already using our tool to improve their application security.
+        </p>
+                  <div class="mt-8">
+            <%= link_to new_user_registration_path, class: "inline-block bg-white text-blue-700 px-6 py-3 rounded-lg font-medium hover:bg-blue-50 transition" do %>
+              Create Free Account
+            <% end %>
+        </div>
+      </div>
+      <div class="md:w-1/2 bg-blue-800 p-10">
+        <h3 class="text-xl font-semibold text-white mb-4">Simple 3-Step Process</h3>
+        <ul class="space-y-6">
+          <li class="flex items-start">
+            <div class="bg-white rounded-full w-8 h-8 flex items-center justify-center text-blue-700 font-bold flex-shrink-0">
+              1
+            </div>
+            <p class="ml-4 text-blue-100">Create an account and set up your organization profile</p>
+          </li>
+          <li class="flex items-start">
+            <div class="bg-white rounded-full w-8 h-8 flex items-center justify-center text-blue-700 font-bold flex-shrink-0">
+              2
+            </div>
+            <p class="ml-4 text-blue-100">Start a new assessment and select the ASVS version and level</p>
+          </li>
+          <li class="flex items-start">
+            <div class="bg-white rounded-full w-8 h-8 flex items-center justify-center text-blue-700 font-bold flex-shrink-0">
+              3
+            </div>
+            <p class="ml-4 text-blue-100">Begin verifying requirements and tracking your progress</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="bg-gray-100 py-10 px-6">
+  <div class="max-w-6xl mx-auto text-center text-gray-600">
+    <p class="mb-4">
+      This tool is 100% open-source and free to use, with options to self-host or use our cloud version. It is not officially affiliated with OWASP but adheres to the principles of the 
       <a href="https://owasp.org/www-project-application-security-verification-standard/"
-         target="_blank"
-         class="bg-white text-blue-600 px-6 py-3 rounded-lg text-lg font-medium hover:bg-gray-100 transition">
-        Learn About ASVS
+         target="_blank" class="text-blue-600 hover:underline">
+        OWASP ASVS framework
+      </a>.
+    </p>
+    <div class="flex justify-center space-x-4 mt-4">
+      <a href="https://github.com/marcbest/owasp-asvs" target="_blank" class="text-gray-500 hover:text-gray-700">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+        </svg>
       </a>
-      
-      <% if user_signed_in? %>
-        <a href="<%= assessments_path %>"
-           class="bg-green-500 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-green-600 transition">
-          Start an Assessment
-        </a>
-      <% else %>
-        <a href="<%= new_user_registration_path %>"
-           class="bg-yellow-400 text-gray-900 px-6 py-3 rounded-lg text-lg font-medium hover:bg-yellow-500 transition">
-          Get Started for Free
-        </a>
-      <% end %>
+      <a href="https://owasp.org/" target="_blank" class="text-gray-500 hover:text-gray-700">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+        </svg>
+      </a>
     </div>
   </div>
-</div>
-
-<div class="max-w-4xl mx-auto py-16 px-6">
-  <h2 class="text-3xl font-bold text-gray-900 text-center">Why Use This Tool?</h2>
-  <p class="mt-3 text-lg text-gray-600 text-center">
-    This platform streamlines ASVS-based security assessments, making it easier to track and manage compliance. 
-    Whether you're a security professional or a developer, this tool helps simplify the assessment process.
-  </p>
-
-  <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
-    <div class="flex items-start space-x-4">
-      <svg class="w-8 h-8 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM8.293 10.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414z" clip-rule="evenodd"/>
-      </svg>
-      <div>
-        <h3 class="text-lg font-semibold text-gray-900">Track ASVS Compliance</h3>
-        <p class="text-gray-600 text-sm">Easily verify your application's security posture with structured assessments.</p>
-      </div>
-    </div>
-
-    <div class="flex items-start space-x-4">
-      <svg class="w-8 h-8 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM8.293 10.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414z" clip-rule="evenodd"/>
-      </svg>
-      <div>
-        <h3 class="text-lg font-semibold text-gray-900">Supports Multiple ASVS Versions</h3>
-        <p class="text-gray-600 text-sm">Select different ASVS versions and adapt your assessments accordingly.</p>
-      </div>
-    </div>
-
-    <div class="flex items-start space-x-4">
-      <svg class="w-8 h-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM8.293 10.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414z" clip-rule="evenodd"/>
-      </svg>
-      <div>
-        <h3 class="text-lg font-semibold text-gray-900">Interactive Assessment</h3>
-        <p class="text-gray-600 text-sm">Mark requirements, add comments, and track progress with real-time updates.</p>
-      </div>
-    </div>
-
-    <div class="flex items-start space-x-4">
-      <svg class="w-8 h-8 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM8.293 10.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414z" clip-rule="evenodd"/>
-      </svg>
-      <div>
-        <h3 class="text-lg font-semibold text-gray-900">Open Source & Free</h3>
-        <p class="text-gray-600 text-sm">Built for the community—no hidden costs, no subscriptions.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="text-center text-sm text-gray-500 mt-12">
-  This tool is not affiliated with OWASP but follows the principles of the 
-  <a href="https://owasp.org/www-project-application-security-verification-standard/"
-     target="_blank" class="text-blue-600 hover:underline">
-    OWASP ASVS framework
-  </a>.
 </div>
