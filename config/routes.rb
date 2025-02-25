@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :assessments, only: [:index, :new, :create, :show, :edit, :update] do
       member do
         get :export
+        get :export_pdf
       end
       resources :responses, only: [:create, :update]
       resources :sharing_urls, only: [:index, :create, :destroy]
