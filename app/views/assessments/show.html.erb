@@ -15,110 +15,113 @@
   @read_only ||= false
 %>
 
-<% unless @read_only %>
-  <!-- Share/Export Buttons (only shown to authenticated users) -->
-  <div class="max-w-screen-2xl mx-auto mb-4" data-controller="modal">
-    <div class="flex justify-end">
-      <button data-action="modal#open"
-              class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
-        </svg>
-        Share
-      </button>
-      
-      <%= link_to export_assessment_path(@assessment, format: :csv), 
-                  class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 ml-2" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-        </svg>
-        Export CSV
-      <% end %>
-      
-      <%= link_to export_pdf_assessment_path(@assessment, format: :pdf, target_level: target_level), 
-                  class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 ml-2", 
-                  target: "_blank" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-        </svg>
-        Export PDF
-      <% end %>
-    </div>
-    
-    <%= render partial: "sharing_modal" %>
-  </div>
-<% else %>
-  <!-- Read-only banner for shared view -->
-  <div class="max-w-screen-2xl mx-auto mb-4">
-    <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
-      <div class="flex">
-        <div class="flex-shrink-0">
-          <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clip-rule="evenodd" />
+<!-- Add padding-top to account for fixed navbar height -->
+<div class="pt-20">
+  <% unless @read_only %>
+    <!-- Share/Export Buttons (only shown to authenticated users) -->
+    <div class="max-w-screen-2xl mx-auto mb-4" data-controller="modal">
+      <div class="flex justify-end">
+        <button data-action="modal#open"
+                class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
           </svg>
+          Share
+        </button>
+        
+        <%= link_to export_assessment_path(@assessment, format: :csv), 
+                    class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 ml-2" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Export CSV
+        <% end %>
+        
+        <%= link_to export_pdf_assessment_path(@assessment, format: :pdf, target_level: target_level), 
+                    class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 ml-2", 
+                    target: "_blank" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+          Export PDF
+        <% end %>
+      </div>
+      
+      <%= render partial: "sharing_modal" %>
+    </div>
+  <% else %>
+    <!-- Read-only banner for shared view -->
+    <div class="max-w-screen-2xl mx-auto mb-4">
+      <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm text-blue-700">
+              You're viewing a shared assessment in read-only mode.
+            </p>
+          </div>
         </div>
-        <div class="ml-3">
-          <p class="text-sm text-blue-700">
-            You're viewing a shared assessment in read-only mode.
+      </div>
+    </div>
+  <% end %>
+
+  <div class="max-w-screen-2xl mx-auto bg-white shadow rounded-lg p-6">
+    <!-- Sticky Progress Bar - Update z-index to ensure it appears above other content but below navbar -->
+    <div class="sticky top-16 left-0 w-full bg-white shadow-md z-20 p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-800">
+            <%= @assessment.name %> - <%= @assessment.asvs_version.version %>: <%= @assessment.asvs_version.name %> – Level <%= target_level %>
+          </h1>
+          <p class="text-sm text-gray-500">
+            Checklist: <%= progress_percentage %>% all pass, total: <%= total_requirements %>
           </p>
         </div>
+        <div class="space-x-2">
+          <label for="target_level" class="text-sm font-medium text-gray-700">Target Level:</label>
+          <select id="target_level" name="target_level"
+                  class="border-gray-300 rounded px-2 py-1 text-sm"
+                  onchange="window.location.href = '<%= @read_only ? shared_assessment_path(params[:uuid]) : assessment_path(@assessment) %>?target_level=' + this.value">
+            <option value="1" <%= "selected" if target_level == 1 %>>Level 1</option>
+            <option value="2" <%= "selected" if target_level == 2 %>>Level 2</option>
+            <option value="3" <%= "selected" if target_level == 3 %>>Level 3</option>
+          </select>
+        </div>
+      </div>
+      <!-- Floating Progress Bar -->
+      <div class="w-full bg-gray-200 h-2 rounded mt-2">
+        <div class="bg-blue-500 h-2 rounded transition-all duration-300"
+             style="width: <%= progress_percentage %>%"></div>
       </div>
     </div>
-  </div>
-<% end %>
 
-<div class="max-w-screen-2xl mx-auto bg-white shadow rounded-lg p-6">
-  <!-- Sticky Progress Bar -->
-  <div class="sticky top-0 left-0 w-full bg-white shadow-md z-10 p-4">
-    <div class="flex items-center justify-between">
-      <div>
-        <h1 class="text-2xl font-bold text-gray-800">
-          <%= @assessment.name %> - <%= @assessment.asvs_version.version %>: <%= @assessment.asvs_version.name %> – Level <%= target_level %>
-        </h1>
-        <p class="text-sm text-gray-500">
-          Checklist: <%= progress_percentage %>% all pass, total: <%= total_requirements %>
-        </p>
-      </div>
-      <div class="space-x-2">
-        <label for="target_level" class="text-sm font-medium text-gray-700">Target Level:</label>
-        <select id="target_level" name="target_level"
-                class="border-gray-300 rounded px-2 py-1 text-sm"
-                onchange="window.location.href = '<%= @read_only ? shared_assessment_path(params[:uuid]) : assessment_path(@assessment) %>?target_level=' + this.value">
-          <option value="1" <%= "selected" if target_level == 1 %>>Level 1</option>
-          <option value="2" <%= "selected" if target_level == 2 %>>Level 2</option>
-          <option value="3" <%= "selected" if target_level == 3 %>>Level 3</option>
-        </select>
-      </div>
+    <!-- Requirements Table -->
+    <div class="overflow-x-auto mt-4">
+      <table class="min-w-full border border-gray-200 text-sm">
+        <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
+          <tr>
+            <th scope="col" class="px-4 py-2 font-medium">ID</th>
+            <th scope="col" class="px-4 py-2 font-medium">Description</th>
+            <th scope="col" class="px-4 py-2 font-medium text-center">L1</th>
+            <th scope="col" class="px-4 py-2 font-medium text-center">L2</th>
+            <th scope="col" class="px-4 py-2 font-medium text-center">L3</th>
+            <th scope="col" class="px-4 py-2 font-medium text-center">Applicable</th>
+            <th scope="col" class="px-4 py-2 font-medium text-center">Pass</th>
+            <th scope="col" class="px-4 py-2 font-medium">Notes</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <% top_requirements = @assessment.asvs_version.requirements.where(parent_id: nil) %>
+          <% top_requirements.each do |req| %>
+            <%= render partial: "assessments/requirement_tree",
+                      locals: { req: req, assessment: @assessment, level: 0, read_only: @read_only } %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
-    <!-- Floating Progress Bar -->
-    <div class="w-full bg-gray-200 h-2 rounded mt-2">
-      <div class="bg-blue-500 h-2 rounded transition-all duration-300"
-           style="width: <%= progress_percentage %>%"></div>
-    </div>
-  </div>
-
-  <!-- Requirements Table -->
-  <div class="overflow-x-auto mt-4">
-    <table class="min-w-full border border-gray-200 text-sm">
-      <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
-        <tr>
-          <th scope="col" class="px-4 py-2 font-medium">ID</th>
-          <th scope="col" class="px-4 py-2 font-medium">Description</th>
-          <th scope="col" class="px-4 py-2 font-medium text-center">L1</th>
-          <th scope="col" class="px-4 py-2 font-medium text-center">L2</th>
-          <th scope="col" class="px-4 py-2 font-medium text-center">L3</th>
-          <th scope="col" class="px-4 py-2 font-medium text-center">Applicable</th>
-          <th scope="col" class="px-4 py-2 font-medium text-center">Pass</th>
-          <th scope="col" class="px-4 py-2 font-medium">Notes</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-gray-200">
-        <% top_requirements = @assessment.asvs_version.requirements.where(parent_id: nil) %>
-        <% top_requirements.each do |req| %>
-          <%= render partial: "assessments/requirement_tree",
-                     locals: { req: req, assessment: @assessment, level: 0, read_only: @read_only } %>
-        <% end %>
-      </tbody>
-    </table>
   </div>
 </div>
