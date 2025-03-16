@@ -22,17 +22,17 @@
         <!-- Show navigation links and login buttons for logged out users -->
         <ul class="flex items-center gap-6">
           <li>
-            <a href="#features" class="text-gray-700 hover:text-primary transition-colors">
+            <a href="<%= root_path(anchor: 'features') %>" class="text-gray-700 hover:text-primary transition-colors">
               Features
             </a>
           </li>
           <li>
-            <a href="#about" class="text-gray-700 hover:text-primary transition-colors">
+            <a href="<%= root_path(anchor: 'about') %>" class="text-gray-700 hover:text-primary transition-colors">
               About ASVS
             </a>
           </li>
           <li>
-            <a href="#get-started" class="text-gray-700 hover:text-primary transition-colors">
+            <a href="<%= root_path(anchor: 'get-started') %>" class="text-gray-700 hover:text-primary transition-colors">
               Documentation
             </a>
           </li>
@@ -40,7 +40,7 @@
 
         <div class="flex items-center gap-2">
           <%= link_to "Login", new_user_session_path, class: "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white border border-gray-200 text-gray-800 hover:bg-gray-50 h-10 px-4 py-2" %>
-          <a href="#get-started" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-white hover:bg-primary/90 h-10 px-4 py-2">
+          <a href="<%= root_path(anchor: 'get-started') %>" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-white hover:bg-primary/90 h-10 px-4 py-2">
             Get Started
           </a>
         </div>
@@ -88,17 +88,17 @@
             </div>
           `;
         } else {
-          // Show navigation and login for logged out users
+          // Show navigation and login for logged out users with absolute links
           menuContent = `
             <div class="container py-6 flex flex-col space-y-4">
-              <a href="#features" class="px-4 py-2 text-gray-700 hover:text-primary">Features</a>
-              <a href="#about" class="px-4 py-2 text-gray-700 hover:text-primary">About ASVS</a>
-              <a href="#get-started" class="px-4 py-2 text-gray-700 hover:text-primary">Documentation</a>
+              <a href="<%= root_path(anchor: 'features') %>" class="px-4 py-2 text-gray-700 hover:text-primary">Features</a>
+              <a href="<%= root_path(anchor: 'about') %>" class="px-4 py-2 text-gray-700 hover:text-primary">About ASVS</a>
+              <a href="<%= root_path(anchor: 'get-started') %>" class="px-4 py-2 text-gray-700 hover:text-primary">Documentation</a>
               <div class="pt-2 px-4 flex flex-col space-y-2">
                 <a href="<%= new_user_session_path %>" class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white border border-gray-200 text-gray-800 hover:bg-gray-50 h-10 px-4 py-2">
                   Login
                 </a>
-                <a href="#get-started" class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-white hover:bg-primary/90 h-10 px-4 py-2">
+                <a href="<%= root_path(anchor: 'get-started') %>" class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-white hover:bg-primary/90 h-10 px-4 py-2">
                   Get Started
                 </a>
               </div>
