@@ -172,9 +172,11 @@ class AssessmentsController < ApplicationController
   private
 
   def set_assessment
-    @assessment = Assessment.find(params[:id])
+    @assessment = current_user.assessments.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to assessments_path, alert: "You don't have permission to access that assessment."
   end
-
+  
   def assessment_params
     params.require(:assessment).permit(:asvs_version_id, :name)
   end
