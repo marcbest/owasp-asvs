@@ -69,82 +69,285 @@
         </a>
       </div>
 
-      <!-- Browser mockup -->
-      <div class="w-full max-w-4xl mx-auto animate-slide-up animation-delay-600">
-        <div class="relative bg-gray-200 rounded-t-lg h-8 flex items-center px-4">
-          <div class="flex gap-2 absolute left-4">
-            <div class="w-3 h-3 rounded-full bg-red-400"></div>
-            <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-            <div class="w-3 h-3 rounded-full bg-green-400"></div>
+    <!-- Browser mockup -->
+<div class="w-full max-w-4xl mx-auto animate-slide-up animation-delay-600">
+  <!-- "Browser" top bar with circles -->
+  <div class="relative bg-gray-200 rounded-t-lg h-8 flex items-center px-4">
+    <div class="flex gap-2 absolute left-4">
+      <div class="w-3 h-3 rounded-full bg-red-400"></div>
+      <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+      <div class="w-3 h-3 rounded-full bg-green-400"></div>
+    </div>
+    <div class="w-full max-w-lg mx-auto">
+      <div class="bg-gray-300 rounded-md h-5 w-full"></div>
+    </div>
+  </div>
+
+  <!-- The "browser" content area -->
+  <div class="relative border border-gray-200 rounded-b-lg shadow-2xl overflow-hidden bg-white aspect-[16/9]">
+    <div class="flex flex-col h-full">
+
+      <!-- Mock "header" inside the browser -->
+      <div class="flex items-center justify-between border-b border-gray-200 p-4">
+        <h2 class="text-xl font-semibold">OWASP ASVS Assessments</h2>
+        <button 
+          class="bg-primary text-white px-3 py-1.5 rounded-md hover:bg-primary/90 text-sm font-medium">
+          New Assessment
+        </button>
+      </div>
+
+      <!-- Main content: a grid of "Assessment" cards -->
+      <div class="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-auto">
+        
+        <!-- Example Card 1 -->
+        <div class="border border-gray-200 rounded-lg p-4 flex flex-col gap-2">
+          <h3 class="font-semibold">Go</h3>
+          <p class="text-sm text-gray-600">
+            Application Security Verification Standard Project - 4.0.3
+          </p>
+          <div class="text-sm font-medium">Level 1 | Progress: 48%</div>
+          <div class="w-full bg-gray-200 h-2 rounded-full">
+            <div class="bg-blue-500 h-2 rounded-full" style="width: 48%"></div>
           </div>
-          <div class="w-full max-w-lg mx-auto">
-            <div class="bg-gray-300 rounded-md h-5 w-full"></div>
-          </div>
-        </div>
-        <div class="relative border border-gray-200 rounded-b-lg shadow-2xl overflow-hidden bg-white aspect-[16/9]">
-          <div class="grid grid-cols-12 h-full">
-            <div class="col-span-3 border-r border-gray-200 p-4">
-              <div class="h-8 w-full bg-gray-100 rounded-md mb-4"></div>
-              <div class="space-y-2">
-                <div class="h-6 w-4/5 bg-gray-100 rounded-md"></div>
-                <div class="h-6 w-full bg-primary/10 rounded-md"></div>
-                <div class="h-6 w-4/5 bg-gray-100 rounded-md"></div>
-                <div class="h-6 w-4/5 bg-gray-100 rounded-md"></div>
-                <div class="h-6 w-4/5 bg-gray-100 rounded-md"></div>
-              </div>
-            </div>
-            <div class="col-span-9 p-4">
-              <div class="h-8 w-2/3 bg-gray-100 rounded-md mb-6"></div>
-              <div class="grid grid-cols-2 gap-4 mb-6">
-                <div class="rounded-lg border border-gray-200 p-4">
-                  <div class="flex justify-between mb-3">
-                    <div class="h-5 w-1/2 bg-gray-100 rounded-md"></div>
-                    <div class="h-5 w-8 bg-primary/20 rounded-full"></div>
-                  </div>
-                  <div class="space-y-2">
-                    <div class="h-3 w-full bg-gray-100 rounded-md"></div>
-                    <div class="h-3 w-5/6 bg-gray-100 rounded-md"></div>
-                  </div>
-                </div>
-                <div class="rounded-lg border border-gray-200 p-4">
-                  <div class="flex justify-between mb-3">
-                    <div class="h-5 w-1/2 bg-gray-100 rounded-md"></div>
-                    <div class="h-5 w-8 bg-primary/20 rounded-full"></div>
-                  </div>
-                  <div class="space-y-2">
-                    <div class="h-3 w-full bg-gray-100 rounded-md"></div>
-                    <div class="h-3 w-5/6 bg-gray-100 rounded-md"></div>
-                  </div>
-                </div>
-                <div class="rounded-lg border border-gray-200 p-4">
-                  <div class="flex justify-between mb-3">
-                    <div class="h-5 w-1/2 bg-gray-100 rounded-md"></div>
-                    <div class="h-5 w-8 bg-primary/20 rounded-full"></div>
-                  </div>
-                  <div class="space-y-2">
-                    <div class="h-3 w-full bg-gray-100 rounded-md"></div>
-                    <div class="h-3 w-5/6 bg-gray-100 rounded-md"></div>
-                  </div>
-                </div>
-                <div class="rounded-lg border border-gray-200 p-4">
-                  <div class="flex justify-between mb-3">
-                    <div class="h-5 w-1/2 bg-gray-100 rounded-md"></div>
-                    <div class="h-5 w-8 bg-primary/20 rounded-full"></div>
-                  </div>
-                  <div class="space-y-2">
-                    <div class="h-3 w-full bg-gray-100 rounded-md"></div>
-                    <div class="h-3 w-5/6 bg-gray-100 rounded-md"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="h-32 w-full bg-gray-100/50 rounded-lg"></div>
-            </div>
+          <div class="flex justify-between text-xs text-gray-500 mt-2">
+            <span>Updated 2 days ago</span>
+            <span>132 requirements</span>
           </div>
         </div>
+
+        <!-- Example Card 2 -->
+        <div class="border border-gray-200 rounded-lg p-4 flex flex-col gap-2">
+          <h3 class="font-semibold">Website 1</h3>
+          <p class="text-sm text-gray-600">
+            Application Security Verification Standard Project - 4.0.3
+          </p>
+          <div class="text-sm font-medium">Level 1 | Progress: 58%</div>
+          <div class="w-full bg-gray-200 h-2 rounded-full">
+            <div class="bg-blue-500 h-2 rounded-full" style="width: 58%"></div>
+          </div>
+          <div class="flex justify-between text-xs text-gray-500 mt-2">
+            <span>Updated 1 day ago</span>
+            <span>112 requirements</span>
+          </div>
+        </div>
+
+        <!-- Example Card 3 -->
+        <div class="border border-gray-200 rounded-lg p-4 flex flex-col gap-2">
+          <h3 class="font-semibold">Test</h3>
+          <p class="text-sm text-gray-600">
+            Application Security Verification Standard Project - 4.0.3
+          </p>
+          <div class="text-sm font-medium">Level 1 | Progress: 99%</div>
+          <div class="w-full bg-gray-200 h-2 rounded-full">
+            <div class="bg-blue-500 h-2 rounded-full" style="width: 99%"></div>
+          </div>
+          <div class="flex justify-between text-xs text-gray-500 mt-2">
+            <span>Updated 3 days ago</span>
+            <span>110 requirements</span>
+          </div>
+        </div>
+
+        <!-- Example Card 4 -->
+        <div class="border border-gray-200 rounded-lg p-4 flex flex-col gap-2">
+          <h3 class="font-semibold">Phone App</h3>
+          <p class="text-sm text-gray-600">
+            Application Security Verification Standard Project - 4.0.3
+          </p>
+          <div class="text-sm font-medium">Level 1 | Progress: 10%</div>
+          <div class="w-full bg-gray-200 h-2 rounded-full">
+            <div class="bg-blue-500 h-2 rounded-full" style="width: 10%"></div>
+          </div>
+          <div class="flex justify-between text-xs text-gray-500 mt-2">
+            <span>Updated 7 days ago</span>
+            <span>80 requirements</span>
+          </div>
+        </div>
+
+        <!-- Example Card 5 -->
+        <div class="border border-gray-200 rounded-lg p-4 flex flex-col gap-2">
+          <h3 class="font-semibold">Test 2</h3>
+          <p class="text-sm text-gray-600">
+            Application Security Verification Standard Project - 4.0.3
+          </p>
+          <div class="text-sm font-medium">Level 1 | Progress: 76%</div>
+          <div class="w-full bg-gray-200 h-2 rounded-full">
+            <div class="bg-blue-500 h-2 rounded-full" style="width: 76%"></div>
+          </div>
+          <div class="flex justify-between text-xs text-gray-500 mt-2">
+            <span>Updated 2 hours ago</span>
+            <span>120 requirements</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
-</section>
+</div>
+
+
+<!-- Another Browser Mockup for a Single Assessment Page (more detailed) -->
+<div class="w-full max-w-4xl mx-auto animate-slide-up animation-delay-600">
+  <!-- "Browser" top bar with circles -->
+  <div class="relative bg-gray-200 rounded-t-lg h-8 flex items-center px-4">
+    <div class="flex gap-2 absolute left-4">
+      <div class="w-3 h-3 rounded-full bg-red-400"></div>
+      <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+      <div class="w-3 h-3 rounded-full bg-green-400"></div>
+    </div>
+    <div class="w-full max-w-lg mx-auto">
+      <div class="bg-gray-300 rounded-md h-5 w-full"></div>
+    </div>
+  </div>
+
+  <!-- Main "browser" content area -->
+  <div class="relative border border-gray-200 rounded-b-lg shadow-2xl overflow-hidden bg-white aspect-[16/9] flex flex-col">
+
+    <!-- Header with title, version, progress, etc. -->
+    <div class="p-4 border-b border-gray-200">
+      <!-- Assessment Title -->
+      <h2 class="text-lg md:text-xl font-semibold">
+        Zappi - 4.0.3: Application Security Verification Standard Project - Level 1
+      </h2>
+
+      <!-- Checklist stats -->
+      <p class="text-sm text-gray-600 mt-1">
+        Checklist: 63 / 195 items completed (32%)
+      </p>
+
+      <!-- Progress + Level row -->
+      <div class="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <!-- Progress bar -->
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-medium">Progress:</span>
+          <div class="w-40 bg-gray-200 h-2 rounded-full">
+            <!-- Example: 54.89% -->
+            <div class="bg-blue-500 h-2 rounded-full" style="width: 54.89%"></div>
+          </div>
+          <span class="text-sm font-medium text-gray-700">54.89%</span>
+        </div>
+
+        <!-- Target Level & button -->
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-1">
+            <span class="text-sm font-medium">Target Level:</span>
+            <span class="text-sm px-2 py-1 bg-blue-100 text-blue-700 rounded-full">Level 1</span>
+          </div>
+          <button 
+            class="bg-primary text-white text-sm px-3 py-1.5 rounded-md hover:bg-primary/90 transition-colors">
+            V13 Requirements
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Requirements -->
+    <div class="overflow-auto p-4 flex-grow">
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="border-b">
+            <th class="py-2 px-2 text-left font-medium text-gray-600">ID</th>
+            <th class="py-2 px-2 text-left font-medium text-gray-600">Requirement</th>
+            <th class="py-2 px-2 text-left font-medium text-gray-600">Notes</th>
+            <th class="py-2 px-2 text-left font-medium text-gray-600">Status</th>
+            <th class="py-2 px-2 text-center font-medium text-gray-600">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y text-gray-700">
+          <!-- Row 1 -->
+          <tr>
+            <td class="py-2 px-2">V1.1.2</td>
+            <td class="py-2 px-2">
+              All authentication controls must be enforced by the application server.
+            </td>
+            <td class="py-2 px-2 text-gray-500">
+              AWS S3 for saving files
+            </td>
+            <td class="py-2 px-2 text-gray-500">
+              Checked
+            </td>
+            <td class="py-2 px-2 text-center">
+              <div class="flex items-center justify-center gap-2">
+                <!-- Example icons (Edit, Delete, Comments) -->
+                <button class="text-gray-500 hover:text-gray-700" title="Edit">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round"
+                       viewBox="0 0 24 24">
+                    <path d="M12 20h9"></path>
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 9.5-9.5z"></path>
+                  </svg>
+                </button>
+                <button class="text-gray-500 hover:text-gray-700" title="Delete">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round"
+                       viewBox="0 0 24 24">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6
+                             m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                  </svg>
+                </button>
+                <button class="text-gray-500 hover:text-gray-700" title="Comments">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round"
+                       viewBox="0 0 24 24">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 
+                             2 0 0 1 2 2z"></path>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Row 2 -->
+          <tr>
+            <td class="py-2 px-2">V1.2.1</td>
+            <td class="py-2 px-2">
+              The architecture is documented and all components are identified with known security controls.
+            </td>
+            <td class="py-2 px-2 text-gray-500">
+              Depends on multi-tenant structure
+            </td>
+            <td class="py-2 px-2 text-gray-500">
+              Pending
+            </td>
+            <td class="py-2 px-2 text-center">
+              <div class="flex items-center justify-center gap-2">
+                <button class="text-gray-500 hover:text-gray-700" title="Edit">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round"
+                       viewBox="0 0 24 24">
+                    <path d="M12 20h9"></path>
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 9.5-9.5z"></path>
+                  </svg>
+                </button>
+                <button class="text-gray-500 hover:text-gray-700" title="Delete">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round"
+                       viewBox="0 0 24 24">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 
+                             2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 
+                             2-2h4a2 2 0 0 1 2 2v2"></path>
+                  </svg>
+                </button>
+                <button class="text-gray-500 hover:text-gray-700" title="Comments">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round"
+                       viewBox="0 0 24 24">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 
+                             2 0 0 1 2-2h12a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Add more rows to replicate your screenshot as needed -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 
 <!-- Features Section -->
 <section id="features" class="section bg-gradient-to-b from-white to-gray-100">
@@ -250,133 +453,6 @@
   </div>
 </section>
 
-<!-- About Section -->
-<section id="about" class="section">
-  <div class="container-wide">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-      <div>
-        <h2 class="text-3xl md:text-4xl font-semibold mb-6">About This Tool</h2>
-        <p class="text-lg text-gray-700 mb-6">
-          Our OWASP ASVS Assessment Tool simplifies the process of evaluating your applications against the ASVS framework, making security verification more accessible and manageable for development teams of all sizes.
-        </p>
-        <p class="text-lg text-gray-700 mb-6">
-          Built with modern technologies and following best practices, this open-source platform helps organizations implement, track, and validate application security requirements throughout the development lifecycle.
-        </p>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-8">
-          <div class="flex gap-3">
-            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
-              <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-              </svg>
-            </div>
-            <div>
-              <h4 class="font-medium text-base">OWASP Aligned</h4>
-              <p class="text-sm text-gray-600">Follows OWASP ASVS standards</p>
-            </div>
-          </div>
-          
-          <div class="flex gap-3">
-            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
-              <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-              </svg>
-            </div>
-            <div>
-              <h4 class="font-medium text-base">PDF Reports</h4>
-              <p class="text-sm text-gray-600">Detailed assessment documentation</p>
-            </div>
-          </div>
-          
-          <div class="flex gap-3">
-            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
-              <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                <path d="M14 2 L14 8 L20 8"></path>
-                <path d="M8 13h8"></path>
-                <path d="M8 17h8"></path>
-                <path d="M8 9h2"></path>
-              </svg>
-            </div>
-            <div>
-              <h4 class="font-medium text-base">CSV Export</h4>
-              <p class="text-sm text-gray-600">For custom data analysis</p>
-            </div>
-          </div>
-          
-          <div class="flex gap-3">
-            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
-              <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M13 12h7a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-2.5M7 12h.5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H7v-4Z"></path>
-                <path d="M12 19h8a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-8v5Z"></path>
-                <path d="m10 6 3.5-3.5a1 1 0 0 1 1.5 0l3.5 3.5"></path>
-                <path d="M15 9V3"></path>
-              </svg>
-            </div>
-            <div>
-              <h4 class="font-medium text-base">Secure Sharing</h4>
-              <p class="text-sm text-gray-600">Time-limited access links</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-2xl border border-gray-200 overflow-hidden relative">
-        <div class="absolute inset-0 opacity-20 bg-grid-pattern"></div>
-        
-        <div class="max-w-md mx-auto">
-          <h3 class="text-xl font-medium mb-6 text-center">How Our Tool Simplifies Security Verification</h3>
-          
-          <div class="space-y-6">
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 relative z-10">
-              <div class="flex items-start">
-                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mr-4">
-                  1
-                </div>
-                <div>
-                  <h4 class="font-medium mb-1">Comprehensive Assessment Framework</h4>
-                  <p class="text-sm text-gray-600">
-                    Access and track all ASVS requirements across different security levels.
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 relative z-10">
-              <div class="flex items-start">
-                <div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mr-4">
-                  2
-                </div>
-                <div>
-                  <h4 class="font-medium mb-1">Interactive Tracking & Documentation</h4>
-                  <p class="text-sm text-gray-600">
-                    Track verification status, add evidence, and document findings efficiently.
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 relative z-10">
-              <div class="flex items-start">
-                <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0 mr-4">
-                  3
-                </div>
-                <div>
-                  <h4 class="font-medium mb-1">Powerful Export & Sharing</h4>
-                  <p class="text-sm text-gray-600">
-                    Generate PDF/CSV reports and create secure sharing links for stakeholders.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- CTA Section -->
 <section id="get-started" class="section bg-gray-50">
   <div class="container-wide">
@@ -442,7 +518,7 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="p-6 rounded-xl border border-gray-200 bg-gray-50 flex flex-col">
+        <div class="p-6 rounded-xl border border-gray-200 bg-white flex flex-col">
           <div class="mb-4">
             <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
               <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -456,7 +532,7 @@
             </p>
           </div>
           <div class="mt-auto">
-            <a href="#" class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-gray-50 h-10 py-2 px-4">
+            <a href="https://github.com/marcbest/owasp-asvs" target="_blank" rel="noopener noreferrer" class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-gray-50 h-10 py-2 px-4">
               <svg class="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
                 <path d="M9 18c-4.51 2-5-2-7-2"></path>
@@ -480,7 +556,7 @@
             </p>
           </div>
           <div class="mt-auto">
-            <a href="#" class="group inline-flex w-full items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-white hover:bg-primary/90 h-10 py-2 px-4">
+            <a href="https://github.com/marcbest/owasp-asvs" target="_blank" rel="noopener noreferrer" class="group inline-flex w-full items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-white hover:bg-primary/90 h-10 py-2 px-4">
               View Documentation
               <svg class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14"></path>
