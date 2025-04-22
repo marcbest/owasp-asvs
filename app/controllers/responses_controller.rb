@@ -21,9 +21,11 @@ class ResponsesController < ApplicationController
   end
 
   private
-
+  
   def set_assessment
-    @assessment = Assessment.find(params[:assessment_id])
+    @assessment = current_user.assessments.find(params[:assessment_id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to assessments_path, alert: "You don't have permission to access that assessment."
   end
 
   def response_params
