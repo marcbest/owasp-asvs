@@ -10,15 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_22_123150) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_13_095817) do
   create_table "assessments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "asvs_version_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+    t.string "uuid"
     t.index ["asvs_version_id"], name: "index_assessments_on_asvs_version_id"
     t.index ["user_id"], name: "index_assessments_on_user_id"
+    t.index ["uuid"], name: "index_assessments_on_uuid", unique: true
   end
 
   create_table "asvs_versions", force: :cascade do |t|

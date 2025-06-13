@@ -43,7 +43,6 @@ class AssessmentsController < ApplicationController
   end
   
   def export
-    @assessment = Assessment.find(params[:id])
     csv_data = CSV.generate(headers: true) do |csv|
       csv << ["question", "answer", "comment", "access", "products", "tags", "healthStatus", "reviewCadence", "nextReviewDate"]
       
@@ -172,7 +171,7 @@ class AssessmentsController < ApplicationController
   private
 
   def set_assessment
-    @assessment = current_user.assessments.find(params[:id])
+    @assessment = current_user.assessments.find_by!(uuid: params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to assessments_path, alert: "You don't have permission to access that assessment."
   end

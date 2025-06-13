@@ -5,13 +5,23 @@ class Assessment < ApplicationRecord
   has_many :sharing_urls, dependent: :destroy
 
   validates :name, presence: true
+  validates :uuid, presence: true, uniqueness: true
 
+  before_validation :generate_uuid, on: :create
+
+  def to_param
+    uuid
+  end
 
   # Automatically create a response for each requirement in the ASVS version
   # with applicable defaulting to true.
   after_create :initialize_responses
 
   private
+
+  def generate_uuid
+    self.uuid = SecureRandom.uuid unless uuid.present?
+  end
 
   def initialize_responses
     asvs_version.requirements.find_each do |requirement|

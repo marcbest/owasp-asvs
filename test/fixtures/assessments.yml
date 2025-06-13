@@ -3,7 +3,11 @@
 one:
   user: one
   asvs_version: one
+  uuid: "550e8400-e29b-41d4-a716-446655440000"
+  name: "Test Assessment One"
 
 two:
   user: two
   asvs_version: two
+  uuid: "550e8400-e29b-41d4-a716-446655440001"
+  name: "Test Assessment Two"
