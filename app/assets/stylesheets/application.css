@@ -8,3 +8,31 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+/* Enhanced checkbox styling */
+.form-checkbox:checked {
+  background-size: 16px 16px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Custom textarea improvements */
+textarea:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Improve table cell spacing and alignment */
+.assessment-table td {
+  vertical-align: top;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* Better hover states for interactive elements */
+.form-checkbox:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+textarea:hover:not(:focus) {
+  border-color: rgb(147, 197, 253);
+}
