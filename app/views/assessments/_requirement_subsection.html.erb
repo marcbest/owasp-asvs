@@ -1,0 +1,63 @@
+<%
+  # Check if this subsection has requirements at the target level
+  subsection_requirements = assessment.responses
+                                      .joins(:requirement)
+                                      .where("requirements.l#{target_level}_required = ?", true)
+                                      .where("requirements.shortcode LIKE ?", "#{subsection.shortcode}.%")
+  
+  # Check if subsection has children (always show subsections that have children, even if no direct requirements)
+  has_children = subsection.children.any?
+  
+  # Skip only if no requirements AND no children
+  return if subsection_requirements.empty? && !has_children
+  
+  # Calculate subsection progress
+  applicable_reqs = subsection_requirements.where(applicable: true)
+  total = applicable_reqs.count
+  completed = applicable_reqs.where(met_requirement: true).count
+  progress = total > 0 ? ((completed.to_f / total) * 100).round : 0
+%>
+
+<!-- Subsection -->
+<div class="bg-white rounded-lg border border-gray-200 shadow-sm">
+  <!-- Subsection Header -->
+  <div class="bg-gray-50 px-4 py-3 border-b border-gray-200">
+    <div class="flex items-center justify-between">
+      <div>
+        <h4 class="font-semibold text-gray-800">
+          <%= subsection.shortcode %>: <%= subsection.name %>
+        </h4>
+        <% if subsection.description.present? %>
+          <p class="text-sm text-gray-600 mt-1">
+            <%= truncate(subsection.description, length: 150) %>
+          </p>
+        <% end %>
+      </div>
+      
+      <!-- Mini progress indicator -->
+      <div class="flex items-center space-x-2">
+        <% if total > 0 %>
+          <span class="text-xs text-gray-500">
+            <%= completed %>/<%= total %>
+          </span>
+          <div class="w-16 bg-gray-200 rounded-full h-1.5">
+            <div class="<%= progress == 100 ? 'bg-green-500' : progress > 0 ? 'bg-blue-500' : 'bg-gray-400' %> h-1.5 rounded-full transition-all duration-300" 
+                 style="width: <%= progress %>%"></div>
+          </div>
+        <% else %>
+          <span class="text-xs text-gray-500">
+            No requirements at L<%= target_level %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Requirements List -->
+  <div class="divide-y divide-gray-100">
+    <% subsection.children.each_with_index do |requirement, index| %>
+      <%= render partial: "assessments/requirement_card",
+                locals: { requirement: requirement, assessment: assessment, target_level: target_level, read_only: read_only, index: index } %>
+    <% end %>
+  </div>
+</div>

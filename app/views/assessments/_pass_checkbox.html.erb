@@ -1,0 +1,7 @@
+<%= form_with model: [assessment, response_obj],
+              data: { turbo_frame: "pass_frame_#{requirement.id}", controller: "auto-save" },
+              local: false do |f| %>
+  <%= f.check_box :met_requirement,
+                 data: { action: "change->auto-save#checkboxChanged" },
+                 class: "w-5 h-5 text-green-600 rounded border-2 border-gray-300 focus:ring-2 focus:ring-green-500 transition-all" %>
+<% end %>

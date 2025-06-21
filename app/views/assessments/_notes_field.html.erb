@@ -1,0 +1,14 @@
+<%= form_with model: [assessment, response_obj],
+              data: { turbo_frame: "notes_frame_#{requirement.id}", controller: "auto-save" },
+              local: false do |f| %>
+  <%= f.text_area :comment,
+                 rows: 2,
+                 placeholder: "Add notes...",
+                 class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm resize-none",
+                 data: { 
+                   action: "input->auto-save#commentChanged input->expanding-textarea#resize",
+                   auto_save_target: "comment",
+                   expanding_textarea_target: "textarea",
+                   expanding_textarea_max_rows: 6
+                 } %>
+<% end %>

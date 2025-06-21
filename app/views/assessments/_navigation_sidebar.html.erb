@@ -1,0 +1,143 @@
+<%
+  # Build section data with progress
+  target_level = params[:target_level].to_i
+  target_level = 1 unless [1, 2, 3].include?(target_level)
+  
+  sections = []
+  @assessment.asvs_version.requirements.where(parent_id: nil).each do |section|
+    # Get all requirements in this section for the target level (not just applicable ones)  
+    all_section_requirements = @assessment.responses
+                                         .joins(:requirement)
+                                         .where("requirements.l#{target_level}_required = ?", true)
+                                         .where("requirements.shortcode LIKE ?", "#{section.shortcode}.%")
+    
+    # Only include sections that have requirements at this target level
+    next if all_section_requirements.empty?
+    
+    # Get applicable requirements for progress calculation
+    applicable_requirements = all_section_requirements.where(applicable: true)
+    
+    total = applicable_requirements.count
+    completed = applicable_requirements.where(met_requirement: true).count
+    progress = total > 0 ? ((completed.to_f / total) * 100).round : 0
+    
+    sections << {
+      shortcode: section.shortcode,
+      name: section.name,
+      total: total,
+      completed: completed,
+      progress: progress,
+      has_requirements: all_section_requirements.count > 0
+    }
+  end
+%>
+
+<!-- Sidebar Navigation with Controller -->
+<div data-controller="sidebar" data-sidebar-expanded-value="false">
+  <!-- Floating Toggle Button (Visible when sidebar is closed) -->
+  <button data-action="click->sidebar#toggle" 
+          data-sidebar-target="floatingToggle"
+          class="fixed left-4 top-24 bg-blue-600 hover:bg-blue-700 rounded-full p-3 shadow-lg transition-all duration-200 z-50 group"
+          title="Open navigation sidebar">
+    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+    <span class="sr-only">Open navigation sidebar</span>
+  </button>
+
+  <!-- Sidebar Panel -->
+  <div class="fixed left-0 top-16 h-full bg-white shadow-lg border-r border-gray-200 transition-all duration-300 z-30">
+  
+  <!-- Close Button (Only visible when sidebar is open) -->
+  <button data-action="click->sidebar#toggle" 
+          data-sidebar-target="toggleBtn"
+          class="absolute -right-4 top-6 bg-red-600 hover:bg-red-700 border border-red-600 rounded-full p-2 shadow-lg transition-all duration-200 z-40 group opacity-0 pointer-events-none"
+          title="Close navigation sidebar">
+    <svg class="w-5 h-5 text-white transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+    <span class="sr-only">Close navigation sidebar</span>
+  </button>
+
+  <!-- Sidebar Content -->
+  <div data-sidebar-target="content" class="w-0 overflow-hidden">
+    <div class="w-64 h-full flex flex-col">
+      <!-- Header -->
+      <div class="p-4 border-b border-gray-200">
+        <h3 class="font-semibold text-gray-800">Assessment Sections</h3>
+        <p class="text-xs text-gray-500 mt-1">Level <%= target_level %></p>
+      </div>
+
+      <!-- Progress Summary -->
+      <div class="p-4 bg-gray-50 border-b border-gray-200">
+        <div class="text-sm text-gray-600 mb-2">Overall Progress</div>
+        <% 
+          total_all = sections.sum { |s| s[:total] }
+          completed_all = sections.sum { |s| s[:completed] }
+          overall_progress = total_all > 0 ? ((completed_all.to_f / total_all) * 100).round : 0
+        %>
+        <div class="flex items-center space-x-2">
+          <div class="flex-1 bg-gray-200 rounded-full h-2">
+            <div class="bg-blue-500 h-2 rounded-full transition-all duration-300" 
+                 style="width: <%= overall_progress %>%"></div>
+          </div>
+          <span class="text-xs font-medium text-gray-700"><%= overall_progress %>%</span>
+        </div>
+        <div class="text-xs text-gray-500 mt-1">
+          <%= completed_all %> of <%= total_all %> requirements
+        </div>
+      </div>
+
+      <!-- Section Navigation -->
+      <div class="flex-1 overflow-y-auto sidebar-scroll" style="max-height: calc(100vh - 220px);">
+        <nav class="p-2 space-y-1">
+          <% sections.each do |section| %>
+            <a href="#section-<%= section[:shortcode] %>" 
+               data-action="click->sidebar#navigateToSection"
+               data-section="<%= section[:shortcode] %>"
+               class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 transition-colors group mb-1">
+              
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center space-x-2">
+                  <span class="font-medium text-sm text-gray-800 group-hover:text-blue-600">
+                    <%= section[:shortcode] %>
+                  </span>
+                  <!-- Status Icon -->
+                  <% if section[:progress] == 100 %>
+                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                  <% elsif section[:progress] > 0 %>
+                    <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                    </svg>
+                  <% else %>
+                    <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 100-12 6 6 0 000 12z" clip-rule="evenodd"/>
+                    </svg>
+                  <% end %>
+                </div>
+                
+                <div class="text-xs text-gray-500 truncate group-hover:text-gray-700 mt-1">
+                  <%= section[:name] %>
+                </div>
+                
+                <!-- Mini Progress Bar -->
+                <div class="flex items-center space-x-2 mt-2">
+                  <div class="flex-1 bg-gray-200 rounded-full h-1">
+                    <div class="h-1 rounded-full transition-all duration-300 <%= section[:progress] == 100 ? 'bg-green-500' : section[:progress] > 0 ? 'bg-yellow-500' : 'bg-gray-300' %>" 
+                         style="width: <%= section[:progress] %>%"></div>
+                  </div>
+                  <span class="text-xs text-gray-500 tabular-nums">
+                    <%= section[:completed] %>/<%= section[:total] %>
+                  </span>
+                </div>
+              </div>
+            </a>
+          <% end %>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

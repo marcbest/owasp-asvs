@@ -17,6 +17,7 @@
 
 <!-- Add padding-top to account for fixed navbar height -->
 <div class="pt-20">
+  <%= render "navigation_sidebar" %>
   <% unless @read_only %>
     <!-- Share/Export Buttons (only shown to authenticated users) -->
     <div class="max-w-screen-2xl mx-auto mb-4" data-controller="modal">
@@ -69,7 +70,7 @@
     </div>
   <% end %>
 
-  <div class="max-w-screen-2xl mx-auto bg-white shadow rounded-lg p-6">
+  <div class="max-w-screen-2xl mx-auto bg-white shadow rounded-lg p-6 assessment-main-content transition-all duration-300">
     <!-- Sticky Progress Bar - Update z-index to ensure it appears above other content but below navbar -->
     <div class="sticky top-16 left-0 w-full bg-white shadow-md z-20 p-4">
       <div class="flex items-center justify-between">
@@ -99,29 +100,13 @@
       </div>
     </div>
 
-    <!-- Requirements Table -->
-    <div class="overflow-x-auto mt-4">
-      <table class="min-w-full border border-gray-200 text-sm assessment-table">
-        <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
-          <tr>
-            <th scope="col" class="px-4 py-2 font-medium">ID</th>
-            <th scope="col" class="px-4 py-2 font-medium">Description</th>
-            <th scope="col" class="px-4 py-2 font-medium text-center">L1</th>
-            <th scope="col" class="px-4 py-2 font-medium text-center">L2</th>
-            <th scope="col" class="px-4 py-2 font-medium text-center">L3</th>
-            <th scope="col" class="px-4 py-2 font-medium text-center">Applicable</th>
-            <th scope="col" class="px-4 py-2 font-medium text-center">Pass</th>
-            <th scope="col" class="px-4 py-2 font-medium">Notes</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200">
-          <% top_requirements = @assessment.asvs_version.requirements.where(parent_id: nil) %>
-          <% top_requirements.each do |req| %>
-            <%= render partial: "assessments/requirement_tree",
-                      locals: { req: req, assessment: @assessment, level: 0, read_only: @read_only } %>
-          <% end %>
-        </tbody>
-      </table>
+    <!-- Requirements Sections -->
+    <div class="mt-4 space-y-6">
+      <% top_requirements = @assessment.asvs_version.requirements.where(parent_id: nil) %>
+      <% top_requirements.each do |section| %>
+        <%= render partial: "assessments/requirement_section",
+                  locals: { section: section, assessment: @assessment, target_level: target_level, read_only: @read_only } %>
+      <% end %>
     </div>
   </div>
 </div>

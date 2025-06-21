@@ -9,7 +9,8 @@
   # Set read_only to false by default if not provided
   read_only ||= false
 %>
-<tr class="hover:bg-gray-50">
+<tr class="hover:bg-gray-50" 
+    <% if is_section_header %>id="section-<%= req.shortcode %>"<% end %>>
   <!-- ID / Shortcode -->
   <td class="px-4 py-2" style="padding-left: <%= level * 20 %>px;">
     <span class="font-semibold text-gray-800">

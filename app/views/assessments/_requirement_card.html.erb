@@ -1,0 +1,203 @@
+<%
+  # Skip if requirement doesn't apply to this level
+  return unless requirement.send("l#{target_level}_required")
+  
+  # Get response object
+  response_obj = assessment.responses.find_by(requirement_id: requirement.id) ||
+                 assessment.responses.build(requirement: requirement)
+  
+  # Status for styling
+  status = if response_obj.applicable? && response_obj.met_requirement?
+    "complete"
+  elsif response_obj.applicable?
+    "in_progress" 
+  elsif response_obj.applicable == false
+    "not_applicable"
+  else
+    "not_started"
+  end
+  
+  # Row styling - softer colors matching app theme
+  row_class = case status
+    when "complete"
+      "bg-green-50 border-l-4 border-green-400"
+    when "in_progress" 
+      "bg-blue-50 border-l-4 border-blue-400"
+    when "not_applicable"
+      "bg-gray-50 border-l-4 border-gray-300"
+    else
+      "hover:bg-gray-25 border-l-4 border-gray-200"
+  end
+  
+  # Alternating backgrounds
+  bg_class = index.even? ? "bg-white" : "bg-gray-25"
+%>
+
+<!-- Requirement Card -->
+<div id="requirement_card_<%= requirement.id %>" 
+     class="p-4 hover:bg-gray-50 transition-colors <%= row_class %>"
+     data-controller="requirement-status"
+     data-requirement-status-card-target="card">
+  <div class="grid grid-cols-12 gap-4 items-start">
+    
+    <!-- Requirement ID and Level Indicators -->
+    <div class="col-span-2">
+      <div class="font-bold text-gray-800 text-sm mb-2">
+        <%= requirement.shortcode %>
+      </div>
+      
+      <!-- Level Indicators -->
+      <div class="flex space-x-1">
+        <% [1, 2, 3].each do |level| %>
+          <span class="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-medium
+                       <%= requirement.send("l#{level}_required") ? 
+                           (level == target_level ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-800') : 
+                           'bg-gray-100 text-gray-400' %>">
+            L<%= level %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+    
+    <!-- Requirement Description -->
+    <div class="col-span-6">
+      <% if requirement.name.present? %>
+        <h5 class="font-medium text-gray-900 mb-2">
+          <%= raw requirement.name.gsub(/\[([^\]]+)\]\(([^)]+)\)/, '<a href="\2" target="_blank" class="text-blue-600 hover:underline">\1</a>') %>
+        </h5>
+      <% end %>
+      
+      <% if requirement.description.present? %>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          <%= raw requirement.description.gsub(/\[([^\]]+)\]\(([^)]+)\)/, '<a href="\2" target="_blank" class="text-blue-600 hover:underline">\1</a>') %>
+        </p>
+      <% end %>
+      
+      <!-- CWE/NIST References -->
+      <% if requirement.cwe.present? || requirement.nist.present? %>
+        <div class="flex flex-wrap gap-2 mt-2">
+          <% if requirement.cwe.present? %>
+            <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-100 text-purple-800">
+              CWE: <%= requirement.cwe %>
+            </span>
+          <% end %>
+          <% if requirement.nist.present? %>
+            <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-indigo-100 text-indigo-800">
+              NIST: <%= requirement.nist %>
+            </span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    
+    <!-- Controls -->
+    <div class="col-span-4">
+      <div class="grid grid-cols-3 gap-3">
+        
+        <!-- Applicable -->
+        <div class="text-center">
+          <label class="block text-xs font-medium text-gray-700 mb-2">Applicable</label>
+          <% if read_only %>
+            <div class="flex justify-center">
+              <%= response_obj.applicable? ? 
+                  content_tag(:div, "✓", class: "w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold") :
+                  content_tag(:div, "—", class: "w-8 h-8 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center") %>
+            </div>
+          <% else %>
+            <turbo-frame id="applicable_frame_<%= requirement.id %>">
+              <%= form_with model: [assessment, response_obj],
+                            data: { turbo_frame: "applicable_frame_#{requirement.id}", controller: "auto-save" },
+                            local: false do |f| %>
+                <%= f.check_box :applicable, 
+                               data: { action: "change->auto-save#checkboxChanged" },
+                               class: "w-5 h-5 text-blue-600 rounded border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 transition-all" %>
+              <% end %>
+            </turbo-frame>
+          <% end %>
+        </div>
+        
+        <!-- Pass -->
+        <div class="text-center">
+          <label class="block text-xs font-medium text-gray-700 mb-2">Pass</label>
+          <% if read_only %>
+            <div class="flex justify-center">
+              <%= response_obj.met_requirement? ? 
+                  content_tag(:div, "✓", class: "w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center font-bold") :
+                  content_tag(:div, "—", class: "w-8 h-8 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center") %>
+            </div>
+          <% else %>
+            <turbo-frame id="pass_frame_<%= requirement.id %>">
+              <%= form_with model: [assessment, response_obj],
+                            data: { turbo_frame: "pass_frame_#{requirement.id}", controller: "auto-save" },
+                            local: false do |f| %>
+                <%= f.check_box :met_requirement,
+                               data: { action: "change->auto-save#checkboxChanged" },
+                               class: "w-5 h-5 text-green-600 rounded border-2 border-gray-300 focus:ring-2 focus:ring-green-500 transition-all" %>
+              <% end %>
+            </turbo-frame>
+          <% end %>
+        </div>
+        
+        <!-- Status Indicator -->
+        <div class="text-center">
+          <label class="block text-xs font-medium text-gray-700 mb-2">Status</label>
+          <div class="flex justify-center" data-requirement-status-target="statusIcon">
+            <% case status
+               when "complete" %>
+              <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+            <% when "in_progress" %>
+              <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+            <% when "not_applicable" %>
+              <div class="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+            <% else %>
+              <div class="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Notes -->
+      <div class="mt-4">
+        <label class="block text-xs font-medium text-gray-700 mb-2">Notes</label>
+        <% if read_only %>
+          <div class="text-sm text-gray-700 p-2 bg-gray-50 rounded border min-h-[3rem]">
+            <%= response_obj.comment.present? ? response_obj.comment : "No notes" %>
+          </div>
+        <% else %>
+          <turbo-frame id="notes_frame_<%= requirement.id %>" data-controller="expanding-textarea">
+            <%= form_with model: [assessment, response_obj],
+                          data: { turbo_frame: "notes_frame_#{requirement.id}", controller: "auto-save" },
+                          local: false do |f| %>
+              <%= f.text_area :comment,
+                             rows: 2,
+                             placeholder: "Add notes...",
+                             class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm resize-none",
+                             data: { 
+                               action: "input->auto-save#commentChanged input->expanding-textarea#resize",
+                               auto_save_target: "comment",
+                               expanding_textarea_target: "textarea",
+                               expanding_textarea_max_rows: 6
+                             } %>
+            <% end %>
+          </turbo-frame>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

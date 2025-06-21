@@ -1,0 +1,128 @@
+<%
+  # Calculate section progress
+  section_requirements = assessment.responses
+                                   .joins(:requirement)
+                                   .where("requirements.l#{target_level}_required = ?", true)
+                                   .where("requirements.shortcode LIKE ?", "#{section.shortcode}.%")
+  
+  applicable_requirements = section_requirements.where(applicable: true)
+  total_requirements = applicable_requirements.count
+  completed_requirements = applicable_requirements.where(met_requirement: true).count
+  
+  # Progress calculation
+  progress_percentage = total_requirements > 0 ? ((completed_requirements.to_f / total_requirements) * 100).round : 0
+  
+  # Status color coding - using app's blue/gray theme
+  status_color = if progress_percentage == 100
+    "complete"
+  elsif progress_percentage > 0
+    "in_progress"
+  else
+    "not_started"
+  end
+  
+  # Color classes matching app theme
+  color_classes = {
+    "complete" => {
+      bg: "bg-green-50",
+      border: "border-green-200",
+      header: "bg-green-100",
+      text: "text-green-800",
+      progress: "bg-green-500"
+    },
+    "in_progress" => {
+      bg: "bg-blue-50", 
+      border: "border-blue-200",
+      header: "bg-blue-100",
+      text: "text-blue-800",
+      progress: "bg-blue-500"
+    },
+    "not_started" => {
+      bg: "bg-gray-50",
+      border: "border-gray-200", 
+      header: "bg-gray-100",
+      text: "text-gray-700",
+      progress: "bg-gray-400"
+    }
+  }
+  
+  colors = color_classes[status_color]
+%>
+
+<!-- Section Card -->
+<div class="bg-white border-2 <%= colors[:border] %> rounded-lg shadow-sm overflow-hidden"
+     id="section-<%= section.shortcode %>"
+     data-controller="collapsible"
+     data-collapsible-expanded-value="true">
+  
+  <!-- Section Header -->
+  <div class="<%= colors[:header] %> p-4 cursor-pointer" 
+       data-action="click->collapsible#toggle"
+       data-collapsible-target="header">
+    
+    <div class="flex items-center justify-between">
+      <!-- Section Info -->
+      <div class="flex items-center space-x-4">
+        <!-- Collapse/Expand Icon -->
+        <button class="flex-shrink-0 p-1 rounded-full hover:bg-white hover:bg-opacity-50 transition-colors"
+                data-collapsible-target="toggleIcon">
+          <svg class="w-5 h-5 <%= colors[:text] %> transform transition-transform duration-200" 
+               fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        
+        <!-- Section Title -->
+        <div>
+          <h3 class="text-lg font-bold <%= colors[:text] %>">
+            <%= section.shortcode %>: <%= section.name %>
+          </h3>
+          <% if section.description.present? %>
+            <p class="text-sm <%= colors[:text] %> opacity-75 mt-1">
+              <%= truncate(section.description, length: 100) %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Progress Info -->
+      <div class="flex items-center space-x-4">
+        <!-- Progress Badge -->
+        <div class="flex items-center space-x-2">
+          <span class="px-3 py-1 bg-white <%= colors[:text] %> rounded-full text-sm font-medium">
+            <%= completed_requirements %>/<%= total_requirements %>
+          </span>
+          <span class="text-sm <%= colors[:text] %> font-medium">
+            <%= progress_percentage %>%
+          </span>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="w-24 bg-white bg-opacity-50 rounded-full h-2">
+          <div class="<%= colors[:progress] %> h-2 rounded-full transition-all duration-300" 
+               style="width: <%= progress_percentage %>%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Section Content (Collapsible) -->
+  <div class="<%= colors[:bg] %> transition-all duration-300 overflow-hidden"
+       data-collapsible-target="content">
+    
+    <% if section.children.any? %>
+      <!-- Subsections -->
+      <div class="p-4 space-y-4">
+        <% section.children.each do |subsection| %>
+          <%= render partial: "assessments/requirement_subsection",
+                    locals: { subsection: subsection, assessment: assessment, target_level: target_level, read_only: read_only, level: 1 } %>
+        <% end %>
+      </div>
+    <% else %>
+      <!-- Direct requirements (if section has no subsections) -->
+      <div class="p-4">
+        <p class="text-gray-600 text-sm">No requirements at this level.</p>
+      </div>
+    <% end %>
+  </div>
+</div>

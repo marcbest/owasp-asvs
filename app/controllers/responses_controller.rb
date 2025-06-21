@@ -7,11 +7,27 @@ class ResponsesController < ApplicationController
     if @response.update(response_params)
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
-            "#{params[:update_field]}_#{@response.id}", 
-            partial: "assessments/checkbox", 
-            locals: { response_obj: @response, assessment: @assessment, field: params[:update_field] }
-          )
+          # Update the specific field that was changed
+          case params[:update_field]
+          when "applicable"
+            render turbo_stream: turbo_stream.replace(
+              "applicable_frame_#{@response.requirement.id}",
+              partial: "assessments/applicable_checkbox",
+              locals: { response_obj: @response, assessment: @assessment, requirement: @response.requirement }
+            )
+          when "met_requirement"
+            render turbo_stream: turbo_stream.replace(
+              "pass_frame_#{@response.requirement.id}",
+              partial: "assessments/pass_checkbox", 
+              locals: { response_obj: @response, assessment: @assessment, requirement: @response.requirement }
+            )
+          when "comment"
+            render turbo_stream: turbo_stream.replace(
+              "notes_frame_#{@response.requirement.id}",
+              partial: "assessments/notes_field",
+              locals: { response_obj: @response, assessment: @assessment, requirement: @response.requirement }
+            )
+          end
         end
         format.html { redirect_to assessment_path(@assessment), notice: "Response updated." }
       end
