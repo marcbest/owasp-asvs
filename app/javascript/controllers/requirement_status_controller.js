@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = ["statusIcon", "card"]
 
   connect() {
-    console.log('Requirement status controller connected')
     // Listen for checkbox changes within this requirement card
     this.element.addEventListener('change', this.updateStatus.bind(this))
     
@@ -38,12 +37,6 @@ export default class extends Controller {
       newStatus = "not_started"
     }
     
-    // Debug logging (remove after testing)
-    console.log('Status Update:', {
-      applicable: applicable,
-      metRequirement: metRequirement,
-      newStatus: newStatus
-    })
     
     // Update visual elements
     this.updateStatusIcon(newStatus)
@@ -57,8 +50,6 @@ export default class extends Controller {
       console.error('Status icon container not found')
       return
     }
-    
-    console.log('Updating status icon to:', status)
     
     let iconHTML
     switch (status) {
@@ -96,7 +87,6 @@ export default class extends Controller {
         break
     }
     
-    console.log('Setting icon HTML:', iconHTML)
     statusIconContainer.innerHTML = iconHTML
   }
 
